@@ -1,0 +1,36 @@
+@import "main";
+
+main {
+  width: 100%;
+  @include flex-row;
+  align-items: center;
+  justify-content: center;
+
+  form {
+    margin-top: 3rem;
+  }
+
+  h2 {
+    font-size: $size-9;
+    color: $grey-3;
+    line-height: 4rem;
+    font-weight: 400;
+  }
+
+  a {
+    font-size: $size-3;
+    color: $main-green;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    display: block;
+    text-align: center;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  mc-button {
+    margin-top: 1rem;
+  }
+}

@@ -1,0 +1,25 @@
+<div class="navbar">
+    <nav>
+        <div id="logo" routerLink="">conduit</div>
+        <ul>
+            <li>
+                <a
+                    [routerLinkActiveOptions]="{ exact: true }"
+                    routerLink=""
+                    routerLinkActive="active"
+                    >Home</a
+                >
+            </li>
+            <li>
+                <a [routerLink]="['/login']" routerLinkActive="active"
+                    >Sign In</a
+                >
+            </li>
+            <li>
+                <a [routerLink]="['/register']" routerLinkActive="active"
+                    >Sign Up</a
+                >
+            </li>
+        </ul>
+    </nav>
+</div>

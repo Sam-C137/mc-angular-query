@@ -1,0 +1,38 @@
+<main>
+    <form [formGroup]="form" (submit)="submit()">
+        <h2>Login to your account</h2>
+        <a [routerLink]="['/login']">Already have an account?</a>
+        <mc-input
+            label="Username"
+            inputId="login-name"
+            type="text"
+            placeholder="Username"
+            [control]="form.get('username')"
+            [error]="formValidator.errors('username')"
+        />
+        <mc-input
+            label="Email Address"
+            inputId="login-email"
+            type="email"
+            placeholder="Enter your email address"
+            [control]="form.get('email')"
+            [error]="formValidator.errors('email')"
+        />
+        <mc-input
+            label="Password"
+            inputId="login-password"
+            type="password"
+            placeholder="Enter your password"
+            iconRightUrl="assets/icons/eye.svg"
+            [control]="form.get('password')"
+            [error]="formValidator.errors('password')"
+        />
+        <mc-button
+            type="submit"
+            [disabled]="form.invalid || mutation.isPending()"
+            [loading]="mutation.isPending()"
+        >
+            Submit
+        </mc-button>
+    </form>
+</main>

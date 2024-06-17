@@ -1,0 +1,12 @@
+<ng-content></ng-content>
+@if (loading()) {
+    <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+}
+@if (type() === 'submit') {
+    <button class="display-none" type="submit"></button>
+}

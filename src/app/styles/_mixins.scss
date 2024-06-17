@@ -1,12 +1,38 @@
 @import "variables";
 
-// mixins
 @mixin logo {
   font-size: 1.5rem;
   margin-right: 2rem;
   color: $main-green;
   font-family: $font-logo;
   cursor: pointer;
+}
+
+@mixin reset() {
+  border: none;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  color: inherit;
+  font-family: inherit;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  line-height: 1.15;
+  background: none;
+}
+
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
 }
 
 @mixin center {
@@ -26,4 +52,16 @@
   display: block;
   position: relative;
   margin-top: 60px;
+}
+
+@mixin text-bold($size: 2.5rem, $color: $gray-1100, $weight: 700) {
+  font-weight: $weight;
+  font-size: $size;
+  color: $color;
+}
+
+@mixin text-normal($size: 1rem, $color: $gray-500, $weight: 400) {
+  font-weight: $weight;
+  font-size: $size;
+  color: $color;
 }

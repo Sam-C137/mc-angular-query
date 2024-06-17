@@ -1,0 +1,57 @@
+@import "main";
+
+.navbar {
+  width: 100%;
+  @include center;
+  font-family: $font-1;
+
+  #logo {
+    @include logo;
+  }
+
+  & > nav {
+    width: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @include lg {
+      width: 80%;
+    }
+    @include breakpoint-height-max(700px) {
+      width: 80%;
+    }
+
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: row;
+
+      li {
+        margin-right: 1rem;
+        a {
+          text-decoration: none;
+          color: $light-1;
+          @include center;
+          gap: 0.2rem;
+
+          &.active {
+            color: $dark-1;
+          }
+
+          &:hover {
+            color: $grey-3;
+          }
+
+          div.img {
+            width: 24px;
+            height: 24px;
+
+            img {
+              @include image;
+            }
+          }
+        }
+      }
+    }
+  }
+}

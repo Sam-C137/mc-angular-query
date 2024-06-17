@@ -1,44 +1,42 @@
 /*** fonts ***/
-$font-logo: titillium web, sans-serif;
-$font-1: source sans pro, sans-serif;
+$font-logo: var(--font-logo);
+$font-1: var(--font-1);
+$font-2: var(--font-2);
 
 /*** font sizes ***/
-$size-1: 0.75rem;
-$size-2: 0.85rem;
-$size-3: 1rem;
-$size-4: 1.15rem;
-$size-5: 1.25rem;
-$size-6: 1.5rem;
-$size-7: 1.75rem;
-$size-8: 2rem;
-$size-9: 2.5rem;
-$size-10: 3rem;
+$size-1: var(--size-1);
+$size-2: var(--size-2);
+$size-3: var(--size-3);
+$size-4: var(--size-4);
+$size-5: var(--size-5);
+$size-6: var(--size-6);
+$size-7: var(--size-7);
+$size-8: var(--size-8);
+$size-9: var(--size-9);
+$size-10: var(--size-10);
 
 /*** colors ***/
 //white
-$light: #fff;
-$light-1: rgb(0 0 0 / 30%);
-$light-2: #ddd;
+$light: var(--light);
+$light-1: var(--light-1);
+$light-2: var(--light-2);
 
 // black
-$dark: #000;
-$dark-1: rgb(0 0 0 / 80%);
-$dark-2: #333;
+$dark: var(--dark);
+$dark-1: var(--dark-1);
+$dark-2: var(--dark-2);
 
 // grey
-$grey-1: #f3f3f3;
-$grey-2: #55595c;
-$grey-3: #373a3c;
-$grey-4: #bbb;
-$grey-5: #aaa;
-$grey-6: #999;
-$grey-7: #ccc;
+$grey-1: var(--grey-1);
+$grey-2: var(--grey-2);
+$grey-3: var(--grey-3);
+$grey-4: var(--grey-4);
+$grey-5: var(--grey-5);
+$grey-6: var(--grey-6);
+$grey-7: var(--grey-7);
 
 // green
-$main-green: #5cb85c !default;
+$main-green: var(--main-green) !default;
 
 // red
-$red-1: #b85c5c;
-
-
-
+$red-1: var(--red-1);

@@ -32,7 +32,7 @@
       "@pipes": ["src/app/libs/pipes"],
       "@directives": ["src/app/libs/directives"],
       "@components": ["src/app/components"],
-      "@types": ["src/app/types"],
+      "@types": ["src/app/libs/types"],
       "@interceptors": ["src/app/libs/interceptors"],
     }
   },
