@@ -5,3 +5,8 @@ export type User = {
     bio: string | null;
     image: string | null;
 };
+
+export type PaginationParams = {
+    limit: number;
+    offset: number;
+};

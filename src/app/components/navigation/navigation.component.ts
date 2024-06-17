@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { RouterLink, RouterLinkActive } from "@angular/router";
+import { UserService } from "@state";
 
 @Component({
     selector: "mc-navigation",
@@ -9,4 +10,6 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
     styleUrl: "./navigation.component.scss",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavigationComponent {}
+export class NavigationComponent {
+    user = inject(UserService).user;
+}

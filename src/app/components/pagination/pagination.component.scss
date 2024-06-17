@@ -1,0 +1,68 @@
+@import "main";
+
+ul {
+  display: inline-block;
+  padding-left: 0;
+  margin: 1rem auto;
+  border-radius: 0.25rem;
+  width: 100%;
+
+  :first-child {
+    span {
+      border-radius: 0.25rem 0 0 0.25rem;
+    }
+  }
+
+  :last-child {
+    span {
+      border-radius: 0 0.25rem 0.25rem 0;
+    }
+  }
+
+  li {
+    display: inline;
+
+    span {
+      position: relative;
+      float: left;
+      padding: 0.5rem 0.75rem;
+      margin-left: -1px;
+      color: $main-green;
+      text-decoration: none;
+      background-color: $light;
+      border: 1px solid $light-2;
+      cursor: pointer;
+
+      &:focus,
+      &:hover {
+        color: $main-green;
+        background-color: $grey-1;
+        border-color: $grey-7;
+      }
+    }
+
+    &.active {
+      span,
+      span:focus,
+      span:hover {
+        z-index: 2;
+        color: $light;
+        cursor: default;
+        background-color: $main-green;
+        border-color: $main-green;
+      }
+    }
+
+    &.disabled {
+      span,
+      span:focus,
+      span:hover {
+        color: $grey-6;
+        pointer-events: none;
+        cursor: not-allowed;
+        background-color: $light;
+        border-color: $grey-2;
+      }
+    }
+  }
+}

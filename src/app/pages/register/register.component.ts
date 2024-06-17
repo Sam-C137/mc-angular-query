@@ -5,6 +5,7 @@ import { ButtonComponent, InputComponent } from "@components";
 import { MCForm } from "@entities";
 import { RegisterService } from "@api";
 import { injectMutation } from "@tanstack/angular-query-experimental";
+import { Title } from "@decorators";
 
 @Component({
     selector: "mc-register",
@@ -16,6 +17,8 @@ import { injectMutation } from "@tanstack/angular-query-experimental";
     providers: [RegisterService],
 })
 export class RegisterComponent extends MCForm {
+    @Title
+    title = "Register";
     registerService = inject(RegisterService);
 
     mutation = injectMutation((client) => ({

@@ -52,11 +52,11 @@ export class ApiService {
                     message: "Please login to continue",
                 }));
             default:
-                console.error(error.error);
+                console.error(error);
                 if (Array.isArray(error.error.message)) {
                     error.error.message = error.error.message.join(", ");
                 }
-                return throwError(() => error.error);
+                return throwError(() => error.error.errors);
         }
     }
 

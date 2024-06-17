@@ -3,6 +3,7 @@ import { ReactiveFormsModule, Validators } from "@angular/forms";
 import { RouterLink } from "@angular/router";
 import { LoginService } from "@api";
 import { ButtonComponent, InputComponent } from "@components";
+import { Title } from "@decorators";
 import { MCForm } from "@entities";
 import { injectMutation } from "@tanstack/angular-query-experimental";
 
@@ -16,6 +17,9 @@ import { injectMutation } from "@tanstack/angular-query-experimental";
     providers: [LoginService],
 })
 export class LoginComponent extends MCForm {
+    @Title
+    title = "Login";
+
     private loginService = inject(LoginService);
 
     mutation = injectMutation((client) => ({

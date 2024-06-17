@@ -2,6 +2,7 @@
     <nav>
         <div id="logo" routerLink="">conduit</div>
         <ul>
+            @if (!user) {
             <li>
                 <a
                     [routerLinkActiveOptions]="{ exact: true }"
@@ -20,6 +21,29 @@
                     >Sign Up</a
                 >
             </li>
+            } @else {
+            <li>
+                <a [routerLink]="['/editor']" routerLinkActive="active"
+                    >New Article</a
+                >
+            </li>
+            <li>
+                <a [routerLink]="['/settings']" routerLinkActive="active"
+                    >Settings</a
+                >
+            </li>
+            <li>
+                <a
+                    [routerLink]="['/profile', user.username]"
+                    routerLinkActive="active"
+                >
+                    <div class="img">
+                        <img [src]="user.image" alt="" />
+                    </div>
+                    Profile
+                </a>
+            </li>
+            }
         </ul>
     </nav>
 </div>

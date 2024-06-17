@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { ApiService } from "@entities";
 import { LoginUserDetails, LoginUserResponse } from "@types";
-import { lastValueFrom, tap } from "rxjs";
+import { catchError, lastValueFrom, tap } from "rxjs";
 import { UserService } from "../state/user.service";
 
 @Injectable()
@@ -22,6 +22,7 @@ export class LoginService extends ApiService {
                         this.userService.user = response.user;
                         await this.router.navigate(["/"]);
                     }),
+                    catchError((error) => this.onError(error)),
                 ),
         );
     }

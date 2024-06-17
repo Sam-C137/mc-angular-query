@@ -20,7 +20,7 @@ export function Title(target: Object, property: string) {
 
     const setter = (next: typeof val) => {
         val = next;
-        document.title = `${val} — HBP`;
+        document.title = `${val} — Conduit`;
     };
 
     Object.defineProperty(target, property, {

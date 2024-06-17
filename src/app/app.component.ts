@@ -10,6 +10,4 @@ import { NavigationComponent } from "./components/navigation/navigation.componen
     styleUrl: "./app.component.scss",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
-    title = "mc-angular-query";
-}
+export class AppComponent {}

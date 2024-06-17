@@ -1,0 +1,35 @@
+<section class="hero">
+    <h1>conduit</h1>
+    <p>A place to share your knowledge.</p>
+</section>
+<main>
+    <section>
+        <mc-feed-header [(isFeed)]="isFeed" />
+        <div class="content">
+            @if (query.isPending()) {
+            <span>
+                <mc-spinner />
+            </span>
+            } @else if (query.isError()) {
+            <!-- <mc-error-page
+                    [error]="articleSignal().error!"
+                    (refetch)="fetchFeed()"
+                /> -->
+            } @else {
+            <mc-article-list [articles]="query.data()!.articles" />
+            }
+        </div>
+        @if (query.data()) {
+        <mc-pagination
+            [currentPage]="currentPage"
+            [limit]="articleLimit"
+            [total]="query.data()!.articlesCount"
+            (changePage)="changePage($event)"
+        />
+        }
+    </section>
+    <section class="tags">
+        <!-- <mc-tags-list /> -->
+    </section>
+</main>
+<footer></footer>

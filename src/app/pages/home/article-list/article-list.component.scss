@@ -1,0 +1,128 @@
+@import "main";
+
+ul,
+li {
+  display: inline;
+  list-style: none;
+  font-size: $size-1;
+  color: #bbb;
+}
+
+ul {
+  li {
+    border: 1px solid #ddd;
+    padding: 0.3rem 0.6rem;
+    border-radius: 10rem;
+    margin-left: 4px;
+  }
+}
+
+article {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1.5rem 0;
+  width: 45vw;
+  @include lg {
+    width: 60vw;
+  }
+  @include breakpoint-height-max(700px) {
+    width: 60vw;
+  }
+
+  div.article-meta {
+    @include center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    button.likes {
+      @include center;
+      gap: 5px;
+      padding: 0.25rem 0.5rem;
+      font-size: $size-2;
+      border-radius: 0.2rem;
+      border: 1px solid $main-green;
+      color: $main-green;
+      background: $light;
+      cursor: pointer;
+
+      svg {
+        path {
+          fill: $main-green;
+        }
+      }
+
+      &:hover,
+      &.active {
+        background: $main-green;
+        color: $light;
+
+        svg {
+          path {
+            fill: $light;
+          }
+        }
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
+
+    .user-info {
+      @include center;
+      gap: 10px;
+
+      div:not(.user-info) {
+        a {
+          font-size: $size-4;
+          color: $main-green;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        p {
+          font-size: $size-2;
+          color: $grey-4;
+        }
+      }
+
+      div.img {
+        height: 32px;
+        width: 32px;
+
+        img {
+          @include image;
+        }
+      }
+    }
+  }
+
+  > a {
+    text-decoration: none;
+
+    > h1 {
+      color: $dark;
+      font-size: 1.5rem;
+      margin-bottom: 3px;
+    }
+
+    > p {
+      font-size: 1rem;
+      margin-bottom: 15px;
+      color: #999;
+    }
+
+    div.tags {
+      @include center;
+      justify-content: space-between;
+
+      p {
+        display: inline;
+        font-size: $size-1;
+        color: #bbb;
+      }
+    }
+  }
+}
