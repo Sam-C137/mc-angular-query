@@ -1,0 +1,29 @@
+@import "variables";
+
+// mixins
+@mixin logo {
+  font-size: 1.5rem;
+  margin-right: 2rem;
+  color: $main-green;
+  font-family: $font-logo;
+  cursor: pointer;
+}
+
+@mixin center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+@mixin footer {
+  display: block;
+  position: relative;
+  margin-top: 60px;
+}

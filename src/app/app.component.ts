@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
 
 @Component({
-  selector: 'mc-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: "mc-root",
+    standalone: true,
+    imports: [RouterOutlet],
+    templateUrl: "./app.component.html",
+    styleUrl: "./app.component.scss",
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  title = 'mc-angular-query';
+    title = "mc-angular-query";
 }

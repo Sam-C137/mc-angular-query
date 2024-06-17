@@ -29,6 +29,9 @@ dependencies:
   '@angular/router':
     specifier: ^17.3.0
     version: 17.3.11(@angular/common@17.3.11)(@angular/core@17.3.11)(@angular/platform-browser@17.3.11)(rxjs@7.8.1)
+  '@tanstack/angular-query-experimental':
+    specifier: ^5.45.0
+    version: 5.45.0(@angular/common@17.3.11)(@angular/core@17.3.11)
   rxjs:
     specifier: ~7.8.0
     version: 7.8.1
@@ -2611,6 +2614,22 @@ packages:
   /@socket.io/component-emitter@3.1.2:
     resolution: {integrity: sha512-9BCxFwvbGg/RsZK9tjXd8s4UcwR0MWeFQ1XEKIQVVvAGJyINdrqKMcTRyLoK8Rse1GjzLV9cwjWV1olXRWEXVA==}
     dev: true
+
+  /@tanstack/angular-query-experimental@5.45.0(@angular/common@17.3.11)(@angular/core@17.3.11):
+    resolution: {integrity: sha512-KzCpJjtEs7hYthBKSSifn6m+QuqN3mEvfWFaTkN24y2LnGpwIgyqJdLT7353pDtfoLODmhAXfnLPI3di5NE29g==}
+    peerDependencies:
+      '@angular/common': '>=16.0.0'
+      '@angular/core': '>=16.0.0'
+    dependencies:
+      '@angular/common': 17.3.11(@angular/core@17.3.11)(rxjs@7.8.1)
+      '@angular/core': 17.3.11(rxjs@7.8.1)(zone.js@0.14.7)
+      '@tanstack/query-core': 5.45.0
+      tslib: 2.6.3
+    dev: false
+
+  /@tanstack/query-core@5.45.0:
+    resolution: {integrity: sha512-RVfIZQmFUTdjhSAAblvueimfngYyfN6HlwaJUPK71PKd7yi43Vs1S/rdimmZedPWX/WGppcq/U1HOj7O7FwYxw==}
+    dev: false
 
   /@tufjs/canonical-json@2.0.0:
     resolution: {integrity: sha512-yVtV8zsdo8qFHe+/3kw81dSLyF7D576A5cCFCi4X7B39tWT7SekaEFUnvnWJHz+9qO7qJTah1JbrDjWKqFtdWA==}
