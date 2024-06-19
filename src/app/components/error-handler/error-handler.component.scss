@@ -1,0 +1,21 @@
+@import "main";
+
+section {
+  @include center;
+  flex-direction: column;
+  gap: 10px;
+
+  span {
+    @include center;
+    gap: 10px;
+    cursor: pointer;
+  }
+}
+
+p {
+  color: red;
+  font-size: 1.15rem;
+  text-align: center;
+  list-style-type: none;
+  margin: 0;
+}

@@ -1,10 +1,25 @@
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    effect,
+    inject,
+    signal,
+} from "@angular/core";
 import { Title } from "@decorators";
 import { FeedHeaderComponent } from "./feed-header/feed-header.component";
 import { ArticleListComponent } from "./article-list/article-list.component";
-import { PaginationComponent, SpinnerComponent } from "@components";
-import { injectQuery } from "@tanstack/angular-query-experimental";
+import {
+    ErrorHandlerComponent,
+    PaginationComponent,
+    SpinnerComponent,
+} from "@components";
+import {
+    injectQuery,
+    injectQueryClient,
+    keepPreviousData,
+} from "@tanstack/angular-query-experimental";
 import { ArticlesService } from "@api";
+import { TagListComponent } from "./tag-list/tag-list.component";
 
 @Component({
     selector: "mc-home",
@@ -14,6 +29,8 @@ import { ArticlesService } from "@api";
         ArticleListComponent,
         SpinnerComponent,
         PaginationComponent,
+        ErrorHandlerComponent,
+        TagListComponent,
     ],
     templateUrl: "./home.component.html",
     styleUrl: "./home.component.scss",
@@ -27,32 +44,44 @@ export class HomeComponent {
 
     isFeed = false;
 
-    currentPage = 1;
+    page = signal(1);
     articleLimit = 10;
 
+    queryClient = injectQueryClient();
+
+    constructor() {
+        effect(() => {
+            if (!this.query.isPlaceholderData() && this.query.data()) {
+                this.queryClient.prefetchQuery({
+                    queryKey: ["home-articles", this.page() + 1],
+                    queryFn: () =>
+                        this.articlesService.getAll(
+                            {
+                                limit: this.articleLimit,
+                                offset: this.page() + 1 * this.articleLimit,
+                            },
+                            this.isFeed,
+                        ),
+                });
+            }
+        });
+    }
+
     query = injectQuery(() => ({
-        queryKey: [
-            "home-articles",
-            {
-                limit: this.articleLimit,
-                offset: (this.currentPage - 1) * this.articleLimit,
-                isFeed: this.isFeed,
-            },
-        ],
+        queryKey: ["home-articles", this.page()],
         queryFn: () =>
             this.articlesService.getAll(
                 {
                     limit: this.articleLimit,
-                    offset: (this.currentPage - 1) * this.articleLimit,
+                    offset: (this.page() - 1) * this.articleLimit,
                 },
                 this.isFeed,
             ),
+        placeholderData: keepPreviousData,
     }));
 
-    void() {}
-
     changePage(page: number) {
-        this.currentPage = page;
-        this.query.refetch();
+        this.page.set(page);
+        // this.query.refetch();
     }
 }

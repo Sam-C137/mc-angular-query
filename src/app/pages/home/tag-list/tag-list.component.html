@@ -1,0 +1,17 @@
+<summary>
+    <h2>Popular Tags</h2>
+
+    @if (query.isPending()) {
+        <mc-spinner />
+    } @else if (query.isError()) {
+        <p>{{ query.error().message }}</p>
+    } @else {
+        <ul>
+            @for (tag of query.data()?.tags; track $index) {
+            <!-- (click)="changeFilter(tag)" -->
+            <!-- [class]="{active: (tagsService.tagFilter | async) === tag}" -->
+                <li>{{ tag }}</li>
+            }
+        </ul>
+    }
+</summary>

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "@entities";
-import { AllArticles, PaginationParams } from "@types";
-import { catchError, lastValueFrom } from "rxjs";
+import { AllArticles, Article, PaginationParams } from "@types";
+import { catchError, lastValueFrom, map } from "rxjs";
 
 @Injectable({
     providedIn: "root",
@@ -21,6 +21,33 @@ export class ArticlesService extends ApiService {
                     },
                 )
                 .pipe(catchError((error) => this.onError(error))),
+        );
+    }
+
+    favorite(slug: string): Promise<Article> {
+        return lastValueFrom(
+            this.http
+                .post<{ article: Article }>(
+                    `${this.baseUrl}/articles/${slug}/favorite`,
+                    {},
+                )
+                .pipe(
+                    map((data) => data.article),
+                    catchError((error) => this.onError(error)),
+                ),
+        );
+    }
+
+    unfavorite(slug: string): Promise<Article> {
+        return lastValueFrom(
+            this.http
+                .delete<{ article: Article }>(
+                    `${this.baseUrl}/articles/${slug}/favorite`,
+                )
+                .pipe(
+                    map((data) => data.article),
+                    catchError((error) => this.onError(error)),
+                ),
         );
     }
 }

@@ -4,32 +4,37 @@
 </section>
 <main>
     <section>
-        <mc-feed-header [(isFeed)]="isFeed" />
+        <mc-feed-header 
+            [(isFeed)]="isFeed"
+            (isFeedChange)="query.refetch()"
+        />
         <div class="content">
             @if (query.isPending()) {
-            <span>
-                <mc-spinner />
-            </span>
+                <span>
+                    <mc-spinner />
+                </span>
             } @else if (query.isError()) {
-            <!-- <mc-error-page
-                    [error]="articleSignal().error!"
-                    (refetch)="fetchFeed()"
-                /> -->
+                <mc-error-handler
+                    [message]="query.error()!.message"
+                    (retry)="query.refetch()"
+                /> 
             } @else {
-            <mc-article-list [articles]="query.data()!.articles" />
+                <mc-article-list 
+                    [articles]="query.data()!.articles" 
+                />
             }
         </div>
         @if (query.data()) {
-        <mc-pagination
-            [currentPage]="currentPage"
-            [limit]="articleLimit"
-            [total]="query.data()!.articlesCount"
-            (changePage)="changePage($event)"
-        />
+            <mc-pagination
+                [currentPage]="page()"
+                [limit]="articleLimit"
+                [total]="query.data()!.articlesCount"
+                (changePage)="changePage($event)"
+            />
         }
     </section>
     <section class="tags">
-        <!-- <mc-tags-list /> -->
+        <mc-tag-list />
     </section>
 </main>
 <footer></footer>
