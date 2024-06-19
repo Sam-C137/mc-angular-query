@@ -1,14 +1,19 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "@entities";
-import { AllArticles, Article, PaginationParams } from "@types";
+import { AllArticles, Article, PaginationParams, Tag, User } from "@types";
 import { catchError, lastValueFrom, map } from "rxjs";
+
+type ArticleExtras = {
+    tag: Tag;
+    favorited: User["username"];
+};
 
 @Injectable({
     providedIn: "root",
 })
 export class ArticlesService extends ApiService {
     getAll(
-        params: PaginationParams,
+        params: Partial<PaginationParams & ArticleExtras>,
         isFeed: boolean = false,
     ): Promise<AllArticles> {
         return lastValueFrom(

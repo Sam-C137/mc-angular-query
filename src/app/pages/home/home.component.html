@@ -7,6 +7,8 @@
         <mc-feed-header 
             [(isFeed)]="isFeed"
             (isFeedChange)="query.refetch()"
+            [(extraTag)]="selectedTag"
+            (extraTagChange)="query.refetch()"
         />
         <div class="content">
             @if (query.isPending()) {
@@ -34,7 +36,10 @@
         }
     </section>
     <section class="tags">
-        <mc-tag-list />
+        <mc-tag-list
+            [(selectedTag)]="selectedTag"
+            (selectedTagChange)="query.refetch()"
+        />
     </section>
 </main>
 <footer></footer>

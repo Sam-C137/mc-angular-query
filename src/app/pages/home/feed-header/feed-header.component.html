@@ -1,12 +1,24 @@
 <header>
-    <p (click)="isFeed.set(false)" [class]="{ active: !isFeed() }">
+    <p 
+        (click)="
+            isFeed.set(false);
+            extraTag.set('')" 
+        [class.active]="!isFeed() && !extraTag()"
+    >
         Global Feed
     </p>
-    @if (user) {
-        <p (click)="isFeed.set(true)" [class]="{ active: isFeed() }">Your feed</p>
-    } @if (tagFilter()) {
-        <p [class]="{ active: tagFilter }">
-            {{ tagFilter() }}
+    @if (user && !extraTag()) {
+        <p 
+            (click)="
+                isFeed.set(true);
+                extraTag.set('')" 
+            [class.active]="isFeed()"
+        >
+            Your feed
+        </p>
+    } @if (extraTag()) {
+        <p [class.active]="extraTag()">
+            {{ extraTag() }}
         </p>
     }
 </header>

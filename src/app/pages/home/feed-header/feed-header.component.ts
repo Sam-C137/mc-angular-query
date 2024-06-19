@@ -6,6 +6,7 @@ import {
     model,
 } from "@angular/core";
 import { UserService } from "@state";
+import { Tag } from "@types";
 
 @Component({
     selector: "mc-feed-header",
@@ -18,5 +19,5 @@ import { UserService } from "@state";
 export class FeedHeaderComponent {
     user = inject(UserService).user;
     isFeed = model<boolean>(false);
-    tagFilter = input<string>();
+    extraTag = model<Tag>();
 }

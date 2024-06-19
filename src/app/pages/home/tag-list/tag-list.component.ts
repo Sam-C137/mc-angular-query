@@ -1,7 +1,13 @@
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    model,
+} from "@angular/core";
 import { SpinnerComponent } from "@components";
 import { injectQuery } from "@tanstack/angular-query-experimental";
-import { TagsService } from "src/app/services/api/tags.service";
+import { TagsService } from "@api";
+import { Tag } from "@types";
 
 @Component({
     selector: "mc-tag-list",
@@ -14,6 +20,7 @@ import { TagsService } from "src/app/services/api/tags.service";
 })
 export class TagListComponent {
     tagsService = inject(TagsService);
+    selectedTag = model<Tag>();
 
     query = injectQuery(() => ({
         queryKey: ["tags"],

@@ -20,6 +20,8 @@ import {
 } from "@tanstack/angular-query-experimental";
 import { ArticlesService } from "@api";
 import { TagListComponent } from "./tag-list/tag-list.component";
+import { Tag } from "@types";
+import { removeFalsyValues } from "@utils";
 
 @Component({
     selector: "mc-home",
@@ -45,6 +47,7 @@ export class HomeComponent {
     isFeed = false;
 
     page = signal(1);
+    selectedTag = signal<Tag>("");
     articleLimit = 10;
 
     queryClient = injectQueryClient();
@@ -56,10 +59,11 @@ export class HomeComponent {
                     queryKey: ["home-articles", this.page() + 1],
                     queryFn: () =>
                         this.articlesService.getAll(
-                            {
+                            removeFalsyValues({
                                 limit: this.articleLimit,
                                 offset: this.page() + 1 * this.articleLimit,
-                            },
+                                tag: this.selectedTag(),
+                            }),
                             this.isFeed,
                         ),
                 });
@@ -71,10 +75,11 @@ export class HomeComponent {
         queryKey: ["home-articles", this.page()],
         queryFn: () =>
             this.articlesService.getAll(
-                {
+                removeFalsyValues({
                     limit: this.articleLimit,
                     offset: (this.page() - 1) * this.articleLimit,
-                },
+                    tag: this.selectedTag(),
+                }),
                 this.isFeed,
             ),
         placeholderData: keepPreviousData,
@@ -82,6 +87,5 @@ export class HomeComponent {
 
     changePage(page: number) {
         this.page.set(page);
-        // this.query.refetch();
     }
 }

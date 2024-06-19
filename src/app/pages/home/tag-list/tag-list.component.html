@@ -8,9 +8,10 @@
     } @else {
         <ul>
             @for (tag of query.data()?.tags; track $index) {
-            <!-- (click)="changeFilter(tag)" -->
-            <!-- [class]="{active: (tagsService.tagFilter | async) === tag}" -->
-                <li>{{ tag }}</li>
+                <li
+                    (click)="selectedTag.set(tag)"
+                    [class.active]="selectedTag() === tag"
+                >{{ tag }}</li>
             }
         </ul>
     }
