@@ -9,7 +9,7 @@
  *       // Expensive computation...
  *      return result;
  *   }
- *
+ * }
  * // the result of getSomeData will be cached based on its arguments
  * ```
  */

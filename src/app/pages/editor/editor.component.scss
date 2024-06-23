@@ -1,0 +1,30 @@
+@import "main";
+
+main {
+  width: 100%;
+  @include flex-row;
+  align-items: center;
+  justify-content: center;
+
+  form {
+    margin-top: 3rem;
+    width: 90%;
+    & > * {
+      margin-top: 1rem;
+    }
+    @include lg {
+      width: 80%;
+    }
+  }
+
+  h2 {
+    font-size: $size-9;
+    color: $grey-3;
+    line-height: 4rem;
+    font-weight: 400;
+  }
+
+  mc-button {
+    float: right;
+  }
+}

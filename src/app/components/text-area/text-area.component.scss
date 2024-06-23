@@ -25,19 +25,12 @@ label {
   line-height: 1.25rem;
 }
 
-:where(input) {
-  @include reset;
-  width: var(--underlying-input-width);
-  font-weight: 500;
-  font-size: var(--font-size);
-}
-
 * {
   transition: all 0.3s ease-in-out;
   font-family: var(--font-family);
 }
 
-:where(.input) {
+:where(textarea) {
   font-weight: 500;
   width: var(--width);
   border: 1px solid var(--border-color);
@@ -51,14 +44,12 @@ label {
   img {
     cursor: pointer;
   }
-  &.focusable {
-    &.focus {
-      outline: 1px solid $main-green;
-      &.focus-error {
-        border-radius: 0.5rem;
-        border: 1px solid #fda29b;
-        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
-      }
+  &:focus {
+    outline: 1px solid $main-green;
+    &.focus-error {
+      border-radius: 0.5rem;
+      border: 1px solid #fda29b;
+      box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
     }
   }
 }

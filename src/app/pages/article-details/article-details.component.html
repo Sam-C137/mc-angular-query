@@ -1,0 +1,22 @@
+@if (query.isLoading()) {
+    <div class="page">
+        <mc-spinner />
+    </div>
+} @else if (query.isError()) {
+    <div class="page">
+        <mc-error-handler 
+            [message]="query.error().message"
+        />
+    </div>
+} @else {
+    <mc-article-banner [article]="query.data()!" />
+    <article>
+        <p>{{ query.data()?.body }}</p>
+        <ul>
+            @for (tag of query.data()?.tagList; track $index) {
+                <li>{{ tag }}</li>
+            }
+        </ul>
+        <hr />
+    </article>
+}

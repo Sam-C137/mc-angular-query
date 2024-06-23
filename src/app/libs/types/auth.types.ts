@@ -34,7 +34,3 @@ export type SignUpUserDetails = {
         password: string;
     };
 };
-
-export type SignUpUserResponse = {} & LoginUserResponse;
-
-export type SignUpState = {} & LoginState;

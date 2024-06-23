@@ -80,7 +80,7 @@ export class FormValidator {
 }
 
 export class CustomValidators {
-    static confirmPasswordValidator(passwordControlName: string): ValidatorFn {
+    static confirmPassword(passwordControlName: string): ValidatorFn {
         return (control: AbstractControl): ValidationErrors | null => {
             const password = control.value;
             const confirmPassword =

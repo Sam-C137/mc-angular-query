@@ -17,3 +17,8 @@ export type AllArticles = {
     articles: Article[];
     articlesCount: number;
 };
+
+export type NewArticle = Pick<
+    Article,
+    "title" | "description" | "body" | "tagList"
+>;

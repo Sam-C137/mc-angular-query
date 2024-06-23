@@ -43,12 +43,12 @@
             <p>Read more...</p>
             <ul>
                 @for (tag of article.tagList; track $index) {
-                <li>{{ tag }}</li>
+                    <li>{{ tag }}</li>
                 }
             </ul>
         </div>
     </a>
 </article>
 } @empty {
-<h1>No articles are here... yet.</h1>
+    <h1>No articles are here... yet.</h1>
 }

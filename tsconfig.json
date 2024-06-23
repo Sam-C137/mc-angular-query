@@ -34,6 +34,7 @@
       "@components": ["src/app/components"],
       "@types": ["src/app/libs/types"],
       "@interceptors": ["src/app/libs/interceptors"],
+      "@guards": ["src/app/libs/guards"],
     }
   },
   "angularCompilerOptions": {

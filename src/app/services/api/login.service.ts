@@ -2,7 +2,7 @@ import { Injectable, inject } from "@angular/core";
 import { ApiService } from "@entities";
 import { LoginUserDetails, LoginUserResponse } from "@types";
 import { catchError, lastValueFrom, tap } from "rxjs";
-import { UserService } from "../state/user.service";
+import { UserService } from "@state";
 
 @Injectable()
 export class LoginService extends ApiService {

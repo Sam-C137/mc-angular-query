@@ -10,7 +10,7 @@ import { ArticlesService } from "@api";
 import { AuthenticatedActions } from "@entities";
 import { injectMutation } from "@tanstack/angular-query-experimental";
 import { Article } from "@types";
-import { Protected } from "src/app/libs/decorators/protected";
+import { Protected } from "@decorators";
 
 @Component({
     selector: "mc-article-list",
@@ -43,7 +43,7 @@ export class ArticleListComponent extends AuthenticatedActions {
     }));
 
     @Protected
-    favoriteArticle(slug: string, isFavorited: boolean) {
+    favoriteArticle(slug: Article["slug"], isFavorited: boolean) {
         if (isFavorited) {
             this.unFavoriteMutation.mutate(slug);
         } else {

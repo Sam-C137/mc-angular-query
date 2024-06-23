@@ -1,0 +1,49 @@
+@import "main";
+
+ul,
+li {
+  display: inline;
+  list-style: none;
+  font-size: $size-1;
+  color: #bbb;
+}
+
+ul {
+  li {
+    border: 1px solid #ddd;
+    padding: 0.3rem 0.6rem;
+    border-radius: 10rem;
+    margin-left: 4px;
+  }
+}
+
+.page {
+  @include center;
+}
+
+article {
+  @include center;
+  padding: 0 10% 32px;
+  flex-direction: column;
+
+  hr {
+    width: 100%;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  ul {
+    align-self: flex-start;
+    margin: 0;
+    padding-left: 0;
+  }
+
+  p {
+    font-family: "source serif pro", serif;
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    margin-bottom: 2rem;
+  }
+}

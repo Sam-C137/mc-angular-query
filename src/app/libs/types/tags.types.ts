@@ -1,5 +1,5 @@
 export type Tag = string;
 
-export interface AllTags {
+export type AllTags = {
     tags: Tag[];
-}
+};
