@@ -2,47 +2,47 @@
     <nav>
         <div id="logo" routerLink="">conduit</div>
         <ul>
-            @if (!user) {
-            <li>
-                <a
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    routerLink=""
-                    routerLinkActive="active"
-                    >Home</a
-                >
-            </li>
-            <li>
-                <a [routerLink]="['/login']" routerLinkActive="active"
-                    >Sign In</a
-                >
-            </li>
-            <li>
-                <a [routerLink]="['/register']" routerLinkActive="active"
-                    >Sign Up</a
-                >
-            </li>
+            @if (user$  | async; as user) {
+                <li>
+                    <a [routerLink]="['/editor']" routerLinkActive="active"
+                        >New Article</a
+                    >
+                </li>
+                <li>
+                    <a [routerLink]="['/settings']" routerLinkActive="active"
+                        >Settings</a
+                    >
+                </li>
+                <li>
+                    <a
+                        [routerLink]="['/profile', user.username]"
+                        routerLinkActive="active"
+                    >
+                        <div class="img">
+                            <img [src]="user.image" alt="" />
+                        </div>
+                        Profile
+                    </a>
+                </li>
             } @else {
-            <li>
-                <a [routerLink]="['/editor']" routerLinkActive="active"
-                    >New Article</a
-                >
-            </li>
-            <li>
-                <a [routerLink]="['/settings']" routerLinkActive="active"
-                    >Settings</a
-                >
-            </li>
-            <li>
-                <a
-                    [routerLink]="['/profile', user.username]"
-                    routerLinkActive="active"
-                >
-                    <div class="img">
-                        <img [src]="user.image" alt="" />
-                    </div>
-                    Profile
-                </a>
-            </li>
+                <li>
+                    <a
+                        [routerLinkActiveOptions]="{ exact: true }"
+                        routerLink=""
+                        routerLinkActive="active"
+                        >Home</a
+                    >
+                </li>
+                <li>
+                    <a [routerLink]="['/login']" routerLinkActive="active"
+                        >Sign In</a
+                    >
+                </li>
+                <li>
+                    <a [routerLink]="['/register']" routerLinkActive="active"
+                        >Sign Up</a
+                    >
+                </li>            
             }
         </ul>
     </nav>

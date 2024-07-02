@@ -2,6 +2,7 @@
     <form [formGroup]="form" (submit)="submit()">
         <h2>Login to your account</h2>
         <a [routerLink]="['/register']">Need an account?</a>
+        <p class="error">{{ mutation.error()?.message }}</p>
         <mc-input
             label="Email Address"
             inputId="login-email"

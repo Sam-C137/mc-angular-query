@@ -1,0 +1,57 @@
+<main>
+    <form (submit)="submit()" [formGroup]="form">
+        <h2>Your Profile</h2>
+        <mc-input
+            inputId="image"
+            type="text"
+            placeholder="Image url"
+            [control]="form.get('image')"
+            [error]="formValidator.errors('image')"
+        />
+        <mc-input
+            inputId="username"
+            type="text"
+            placeholder="Username"
+            [control]="form.get('username')"
+            [error]="formValidator.errors('username')"
+        />
+        <mc-text-area
+            inputId="bio"
+            placeholder="Short bio about you"
+            [control]="form.get('bio')"
+            [rows]="8"
+        />
+        <mc-input
+            inputId="email"
+            type="email"
+            placeholder="Email"
+            [control]="form.get('email')"
+            [error]="formValidator.errors('email')"
+        />
+        <mc-input
+            inputId="password"
+            type="password"
+            placeholder="New Password"
+            [control]="form.get('password')"
+            [error]="formValidator.errors('password')"
+        />
+        <div>
+            <mc-button
+                type="submit"
+                [disabled]="profileMutation.isPending()"
+                [loading]="profileMutation.isPending()"
+            >
+              Update @if (profileMutation.isPending()) { ing } Settings
+            </mc-button>
+        </div>
+        <hr />
+        <mc-button
+            type="button"
+            [disabled]="profileMutation.isPending()"
+            [loading]="profileMutation.isPending()"
+            (click)="logout()"
+        >
+            Or click here to log out.
+        </mc-button>
+    </form>
+</main>

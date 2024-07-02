@@ -45,18 +45,19 @@ export class ApiService {
                     message:
                         "An error occurred on the server. Please try again later.",
                 }));
-            case 403:
-                this.router.navigate(["/login"]);
-                this.tokenService.clear();
-                return throwError(() => ({
-                    message: "Please login to continue",
-                }));
             default:
                 console.error(error);
-                if (Array.isArray(error.error.message)) {
-                    error.error.message = error.error.message.join(", ");
+                let errorMessage = "An error occurred";
+                if (error && error.error && error.error.errors) {
+                    const errors: { [key: string]: string[] } =
+                        error.error.errors;
+                    const errorMessages = [];
+                    for (const [key, value] of Object.entries(errors)) {
+                        errorMessages.push(`${key}: ${value.join(", ")}`);
+                    }
+                    errorMessage = errorMessages.join(", ");
                 }
-                return throwError(() => error.error.errors);
+                return throwError(() => new Error(errorMessage));
         }
     }
 

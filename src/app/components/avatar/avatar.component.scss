@@ -1,0 +1,17 @@
+@import "main";
+
+:host {
+  --size: 3rem;
+}
+
+span {
+  @include rounded-img-container(var(--size));
+  @include center;
+  img {
+    @include rounded-image;
+  }
+}
+
+p {
+  font-size: calc(var(--size) / 3);
+}

@@ -19,12 +19,18 @@ export class UserService {
         if (this._user()) {
             return this._user();
         } else if (localStorage.getItem("mc-user")) {
-            return JSON.parse(localStorage.getItem("mc-user")!);
+            this._user.set(JSON.parse(localStorage.getItem("mc-user")!));
+            return this._user();
         }
         return undefined;
     }
 
     set user(user: User | undefined) {
         this._user.set(user);
+    }
+
+    logout() {
+        this._user.set(undefined);
+        localStorage.removeItem("mc-user");
     }
 }

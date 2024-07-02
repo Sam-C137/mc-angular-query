@@ -1,0 +1,55 @@
+@import "main";
+
+main {
+  width: 100%;
+  @include flex-row;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    font-size: $size-9;
+    color: $grey-3;
+    line-height: 4rem;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  form {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    width: 70%;
+    & > * {
+      margin-top: 1rem;
+    }
+    @include lg {
+      width: 60%;
+    }
+
+    div{
+      @include flex-row;
+      justify-content: flex-end;
+    }
+  }
+
+  h2 {
+    font-size: $size-9;
+    color: $grey-3;
+    line-height: 4rem;
+    font-weight: 400;
+  }
+
+  mc-button[type="button"] {
+    background: $light;
+    padding: .5rem 1rem;
+    border-radius: .25rem;
+    font-size: $size-3;
+    color: $red-1;
+    border: 1px solid $red-1;
+    cursor: pointer;
+
+    &:hover {
+      color: light-comp(#b85c5c);
+      background: $red-1;
+    }
+  }
+}

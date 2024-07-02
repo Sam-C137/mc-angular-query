@@ -1,0 +1,9 @@
+<span
+    [style.backgroundColor]="'lighter' | color: 10"
+>
+    @if (src()) {
+        <img [src]="src()" [attr.alt]="fallback()" />
+    } @else {
+        <p>{{ fallback() | initials }}</p>
+    }
+</span>

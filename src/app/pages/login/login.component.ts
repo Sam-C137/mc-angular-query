@@ -29,6 +29,11 @@ export class LoginComponent extends MCForm {
                 password: string;
             };
         }) => this.loginService.login(credentials),
+        onSuccess: () => {
+            client.invalidateQueries({
+                queryKey: ["home-articles"],
+            });
+        },
     }));
 
     override setupForm() {

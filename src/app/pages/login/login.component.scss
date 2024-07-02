@@ -33,4 +33,9 @@ main {
   mc-button {
     margin-top: 1rem;
   }
+
+  p.error{
+    text-align: center;
+    color: $red-1;
+  }
 }
