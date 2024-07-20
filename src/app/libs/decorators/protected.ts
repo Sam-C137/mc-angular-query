@@ -1,5 +1,7 @@
+import { AuthenticatedActions } from "@entities";
+
 export function Protected(
-    target: Object,
+    target: AuthenticatedActions,
     propertyKey: string,
     descriptor: PropertyDescriptor,
 ) {
