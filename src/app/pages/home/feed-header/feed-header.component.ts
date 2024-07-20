@@ -1,10 +1,4 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    inject,
-    input,
-    model,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, model } from "@angular/core";
 import { UserService } from "@state";
 import { Tag } from "@types";
 

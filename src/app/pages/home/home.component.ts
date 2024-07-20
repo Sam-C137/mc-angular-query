@@ -1,23 +1,9 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    effect,
-    inject,
-    signal,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from "@angular/core";
 import { Title } from "@decorators";
 import { FeedHeaderComponent } from "./feed-header/feed-header.component";
 import { ArticleListComponent } from "./article-list/article-list.component";
-import {
-    ErrorHandlerComponent,
-    PaginationComponent,
-    SpinnerComponent,
-} from "@components";
-import {
-    injectQuery,
-    injectQueryClient,
-    keepPreviousData,
-} from "@tanstack/angular-query-experimental";
+import { ErrorHandlerComponent, PaginationComponent, SpinnerComponent } from "@components";
+import { injectQuery, injectQueryClient, keepPreviousData } from "@tanstack/angular-query-experimental";
 import { ArticlesService } from "@api";
 import { TagListComponent } from "./tag-list/tag-list.component";
 import { Tag } from "@types";
@@ -40,38 +26,19 @@ import { removeFalsyValues } from "@utils";
 })
 export class HomeComponent {
     @Title
-    title = "Home";
-
-    articlesService = inject(ArticlesService);
-
-    isFeed = false;
-
-    page = signal(1);
-    selectedTag = signal<Tag>("");
-    articleLimit = 10;
-
-    queryClient = injectQueryClient();
+    readonly title = "Home";
+    private articlesService = inject(ArticlesService);
+    public isFeed = false;
+    protected page = signal(1);
+    protected selectedTag = signal<Tag>("");
+    protected articleLimit = 10;
+    private queryClient = injectQueryClient();
 
     constructor() {
-        effect(() => {
-            if (!this.query.isPlaceholderData() && this.query.data()) {
-                this.queryClient.prefetchQuery({
-                    queryKey: ["home-articles", this.page() + 1],
-                    queryFn: () =>
-                        this.articlesService.getAll(
-                            removeFalsyValues({
-                                limit: this.articleLimit,
-                                offset: this.page() + 1 * this.articleLimit,
-                                tag: this.selectedTag(),
-                            }),
-                            this.isFeed,
-                        ),
-                });
-            }
-        });
+        effect(this.handlePrefetch);
     }
 
-    query = injectQuery(() => ({
+    protected readonly articlesQuery = injectQuery(() => ({
         queryKey: ["home-articles", this.page()],
         queryFn: () =>
             this.articlesService.getAll(
@@ -85,7 +52,24 @@ export class HomeComponent {
         placeholderData: keepPreviousData,
     }));
 
-    changePage(page: number) {
+    private handlePrefetch = async () => {
+        if (!this.articlesQuery.isPlaceholderData() && this.articlesQuery.data()) {
+            await this.queryClient.prefetchQuery({
+                queryKey: ["home-articles", this.page() + 1],
+                queryFn: () =>
+                    this.articlesService.getAll(
+                        removeFalsyValues({
+                            limit: this.articleLimit,
+                            offset: this.page() + 1 * this.articleLimit,
+                            tag: this.selectedTag(),
+                        }),
+                        this.isFeed,
+                    ),
+            });
+        }
+    };
+
+    public changePage(page: number) {
         this.page.set(page);
     }
 }

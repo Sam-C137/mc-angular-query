@@ -1,13 +1,5 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    ElementRef,
-    Host,
-    HostBinding,
-    HostListener,
-    inject,
-    input,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, input } from "@angular/core";
+import { HasDisabledStateDirective } from "../../libs/directives/has-disabled-state.directive";
 
 @Component({
     selector: "mc-button",
@@ -16,21 +8,24 @@ import {
     templateUrl: "./button.component.html",
     styleUrl: "./button.component.scss",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    hostDirectives: [
+        {
+            directive: HasDisabledStateDirective,
+            inputs: ["disabled"],
+        },
+    ],
 })
 export class ButtonComponent {
     type = input<"button" | "submit" | "reset">("button");
-    disabled = input<boolean | undefined | null>(false);
     loading = input<boolean | undefined | null>(false);
     private el = inject(ElementRef);
-
-    @HostBinding("attr.data-disabled")
-    get isDisabled() {
-        return this.disabled();
-    }
+    private hasDisabled = inject(HasDisabledStateDirective, {
+        optional: true,
+    });
 
     @HostListener("click", ["$event"])
     handleClick() {
-        if (this.disabled() || this.loading()) {
+        if (this.hasDisabled?.disabled() || this.loading()) {
             return;
         }
 

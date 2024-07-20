@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "@entities";
 import { Profile } from "@types";
-import { catchError, lastValueFrom, map } from "rxjs";
+import { lastValueFrom, map } from "rxjs";
 
 @Injectable({
     providedIn: "root",
@@ -14,10 +14,7 @@ export class FollowersService extends ApiService {
                     `${this.baseUrl}/profiles/${username}/follow`,
                     {},
                 )
-                .pipe(
-                    map((data) => data.profile),
-                    catchError((e) => this.onError(e)),
-                ),
+                .pipe(map((data) => data.profile)),
         );
     }
 
@@ -27,10 +24,7 @@ export class FollowersService extends ApiService {
                 .delete<{ profile: Profile }>(
                     `${this.baseUrl}/profiles/${username}/follow`,
                 )
-                .pipe(
-                    map((data) => data.profile),
-                    catchError((e) => this.onError(e)),
-                ),
+                .pipe(map((data) => data.profile)),
         );
     }
 }

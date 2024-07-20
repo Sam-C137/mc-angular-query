@@ -1,4 +1,4 @@
-@import "main";
+@use "main" as *;
 
 main {
   width: 100%;
@@ -18,14 +18,16 @@ main {
     margin-top: 3rem;
     margin-bottom: 2rem;
     width: 70%;
+
     & > * {
       margin-top: 1rem;
     }
+
     @include lg {
       width: 60%;
     }
 
-    div{
+    div {
       @include flex-row;
       justify-content: flex-end;
     }

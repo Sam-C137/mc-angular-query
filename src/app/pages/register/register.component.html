@@ -7,7 +7,7 @@
             inputId="login-name"
             type="text"
             placeholder="Username"
-            [control]="form.get('username')"
+            formControlName="username"
             [error]="formValidator.errors('username')"
         />
         <mc-input
@@ -15,7 +15,7 @@
             inputId="login-email"
             type="email"
             placeholder="Enter your email address"
-            [control]="form.get('email')"
+            formControlName="email"
             [error]="formValidator.errors('email')"
         />
         <mc-input
@@ -24,13 +24,13 @@
             type="password"
             placeholder="Enter your password"
             iconRightUrl="assets/icons/eye.svg"
-            [control]="form.get('password')"
+            formControlName="password"
             [error]="formValidator.errors('password')"
         />
         <mc-button
             type="submit"
-            [disabled]="form.invalid || mutation.isPending()"
-            [loading]="mutation.isPending()"
+            [disabled]="form.invalid || registerMutation.isPending()"
+            [loading]="registerMutation.isPending()"
         >
             Submit
         </mc-button>

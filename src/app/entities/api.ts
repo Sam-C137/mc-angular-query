@@ -1,16 +1,11 @@
-import {
-    HttpClient,
-    HttpErrorResponse,
-    HttpHeaders,
-} from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { inject } from "@angular/core";
 import { environment } from "src/environments/environment.development";
 import { TokenService } from "@state";
-import { Subject, throwError } from "rxjs";
+import { throwError } from "rxjs";
 import { Router } from "@angular/router";
 
 export class ApiService {
-    protected destroyer$ = new Subject<void>();
     protected http = inject(HttpClient);
     protected router = inject(Router);
     protected tokenService = inject(TokenService);
@@ -59,10 +54,5 @@ export class ApiService {
                 }
                 return throwError(() => new Error(errorMessage));
         }
-    }
-
-    destroy() {
-        this.destroyer$.next();
-        this.destroyer$.complete();
     }
 }

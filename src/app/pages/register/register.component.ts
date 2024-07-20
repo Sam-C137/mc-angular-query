@@ -18,10 +18,10 @@ import { Title } from "@decorators";
 })
 export class RegisterComponent extends MCForm {
     @Title
-    title = "Register";
-    registerService = inject(RegisterService);
+    readonly title = "Register";
+    private registerService = inject(RegisterService);
 
-    mutation = injectMutation((client) => ({
+     protected readonly registerMutation = injectMutation((client) => ({
         mutationFn: (credentials: {
             user: {
                 username: string;
@@ -39,9 +39,9 @@ export class RegisterComponent extends MCForm {
         });
     }
 
-    submit() {
-        if (this.form.valid || !this.mutation.isPending()) {
-            this.mutation.mutate({
+    public submit() {
+        if (this.form.valid || !this.registerMutation.isPending()) {
+            this.registerMutation.mutate({
                 user: this.form.value,
             });
         }

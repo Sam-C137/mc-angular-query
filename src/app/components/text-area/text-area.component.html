@@ -1,18 +1,17 @@
-<span class="position-relative">
-    <label [for]="inputId()">
-        {{ label() }}
-        @if (required()) {
-            <i>*</i>
-        }
-    </label>
-    <textarea
-        preventLeadingSpace
-        [id]="inputId()"
-        [class.focus-error]="error()"
-        [name]="inputId()"
-        [placeholder]="placeholder()"
-        [rows]="rows()"
-        [formControl]="control()"
-    ></textarea>
-    <p class="error">{{ error() }}</p>
-</span>
+<label [for]="inputId()">
+    {{ label() }}
+    @if (required()) {
+        <i>*</i>
+    }
+</label>
+<textarea
+    preventLeadingSpace
+    [id]="inputId()"
+    [class.focus-error]="error()"
+    [name]="inputId()"
+    [placeholder]="placeholder()"
+    [rows]="rows()"
+    [formControl]="control"
+    *ngIf="control"
+></textarea>
+<p class="error">{{ error() }}</p>

@@ -1,41 +1,30 @@
 import { ChangeDetectionStrategy, Component, input } from "@angular/core";
-import {
-    AbstractControl,
-    FormControl,
-    ReactiveFormsModule,
-} from "@angular/forms";
+import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from "@angular/forms";
 import { PreventLeadingSpace } from "@directives";
+import { NgIf } from "@angular/common";
+import { BaseValueAccessorDirective } from "../../libs/directives/base-value-accessor.directive";
 
 @Component({
     selector: "mc-input",
     standalone: true,
-    imports: [ReactiveFormsModule, PreventLeadingSpace],
+    imports: [PreventLeadingSpace, ReactiveFormsModule, NgIf],
     templateUrl: "./input.component.html",
     styleUrl: "./input.component.scss",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useClass: InputComponent,
+            multi: true,
+        },
+    ],
 })
-export class InputComponent {
-    control = input<AbstractControl | FormControl | any>();
-    class = input<string>();
+export class InputComponent<T> extends BaseValueAccessorDirective<T> {
     inputId = input.required<string>();
     type = input<"text" | "password" | "email" | "tel">("text");
     placeholder = input<string>("");
     name = input<string>();
     label = input<string>();
-    iconLeftUrl = input<string>("");
-    iconRightUrl = input<string>("");
-    controlName = input<string>("");
-    required = input<boolean>(false);
     autocomplete = input<string>("");
     error = input<string>();
-
-    togglePasswordVisibility(element: HTMLInputElement) {
-        if (this.type() === "password") {
-            if (element?.type === "password") {
-                element.type = "text";
-            } else {
-                element.type = "password";
-            }
-        }
-    }
 }

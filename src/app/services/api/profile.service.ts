@@ -1,7 +1,7 @@
-import { Injectable, inject } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { ApiService } from "@entities";
 import { Profile, User } from "@types";
-import { catchError, lastValueFrom, map, tap } from "rxjs";
+import { lastValueFrom, map, tap } from "rxjs";
 import { UserService } from "../state/user.service";
 
 @Injectable()
@@ -18,7 +18,6 @@ export class ProfileService extends ApiService {
                     tap((data) => {
                         this.userService.user = data.user;
                     }),
-                    catchError((e) => this.onError(e)),
                 ),
         );
     }
@@ -31,10 +30,7 @@ export class ProfileService extends ApiService {
                 }>(`${this.baseUrl}/profiles/${username}`, {
                     headers: this.headers.headers,
                 })
-                .pipe(
-                    map((data) => data.profile),
-                    catchError((e) => this.onError(e)),
-                ),
+                .pipe(map((data) => data.profile)),
         );
     }
 }

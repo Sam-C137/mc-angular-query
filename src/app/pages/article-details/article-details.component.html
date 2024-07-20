@@ -1,19 +1,19 @@
-@if (query.isLoading()) {
+@if (articleQuery.isLoading()) {
     <div class="page">
         <mc-spinner />
     </div>
-} @else if (query.isError()) {
+} @else if (articleQuery.isError()) {
     <div class="page">
         <mc-error-handler
-            [message]="query.error().message"
+            [message]="articleQuery.error().message"
         />
     </div>
 } @else {
-    <mc-article-banner [article]="query.data()!" />
+    <mc-article-banner [article]="articleQuery.data()!" />
     <article>
-        <p>{{ query.data()?.body }}</p>
+        <p>{{ articleQuery.data()?.body }}</p>
         <ul>
-            @for (tag of query.data()?.tagList; track $index) {
+            @for (tag of articleQuery.data()?.tagList; track $index) {
                 <li>{{ tag }}</li>
             }
         </ul>

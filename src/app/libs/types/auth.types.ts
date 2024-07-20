@@ -14,12 +14,6 @@ export type LoginUserResponse = {
     user: User;
 };
 
-export type LoginState = {
-    isSubmitting: boolean;
-    errors: BackendErrors | null;
-    user: User | null;
-};
-
 export type BackendErrors = {
     [key: string]: string[];
 };

@@ -4,33 +4,33 @@
 </section>
 <main>
     <section>
-        <mc-feed-header 
+        <mc-feed-header
             [(isFeed)]="isFeed"
-            (isFeedChange)="query.refetch()"
+            (isFeedChange)="articlesQuery.refetch()"
             [(extraTag)]="selectedTag"
-            (extraTagChange)="query.refetch()"
+            (extraTagChange)="articlesQuery.refetch()"
         />
         <div class="content">
-            @if (query.isPending()) {
+            @if (articlesQuery.isPending()) {
                 <span>
                     <mc-spinner />
                 </span>
-            } @else if (query.isError()) {
+            } @else if (articlesQuery.isError()) {
                 <mc-error-handler
-                    [message]="query.error()!.message"
-                    (retry)="query.refetch()"
-                /> 
+                    [message]="articlesQuery.error()!.message"
+                    (retry)="articlesQuery.refetch()"
+                />
             } @else {
-                <mc-article-list 
-                    [articles]="query.data()!.articles" 
+                <mc-article-list
+                    [articles]="articlesQuery.data()!.articles"
                 />
             }
         </div>
-        @if (query.data()) {
+        @if (articlesQuery.data()) {
             <mc-pagination
                 [currentPage]="page()"
                 [limit]="articleLimit"
-                [total]="query.data()!.articlesCount"
+                [total]="articlesQuery.data()!.articlesCount"
                 (changePage)="changePage($event)"
             />
         }
@@ -38,7 +38,7 @@
     <section class="tags">
         <mc-tag-list
             [(selectedTag)]="selectedTag"
-            (selectedTagChange)="query.refetch()"
+            (selectedTagChange)="articlesQuery.refetch()"
         />
     </section>
 </main>

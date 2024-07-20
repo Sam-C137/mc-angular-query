@@ -18,19 +18,19 @@ import { injectMutation } from "@tanstack/angular-query-experimental";
 })
 export class LoginComponent extends MCForm {
     @Title
-    title = "Login";
+    readonly title = "Login";
 
     private loginService = inject(LoginService);
 
-    mutation = injectMutation((client) => ({
+    protected readonly registerMutation = injectMutation((client) => ({
         mutationFn: (credentials: {
             user: {
                 email: string;
                 password: string;
             };
         }) => this.loginService.login(credentials),
-        onSuccess: () => {
-            client.invalidateQueries({
+        onSuccess: async () => {
+            await client.invalidateQueries({
                 queryKey: ["home-articles"],
             });
         },
@@ -43,9 +43,9 @@ export class LoginComponent extends MCForm {
         });
     }
 
-    submit() {
-        if (this.form.valid || !this.mutation.isPending()) {
-            this.mutation.mutate({
+    public submit() {
+        if (this.form.valid || !this.registerMutation.isPending()) {
+            this.registerMutation.mutate({
                 user: this.form.value,
             });
         }

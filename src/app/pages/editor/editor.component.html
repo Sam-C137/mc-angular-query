@@ -4,35 +4,35 @@
             inputId="title"
             type="text"
             placeholder="Article Title"
-            [control]="form.get('title')"
+            formControlName="title"
         />
         <mc-input
             inputId="description"
             type="text"
             placeholder="What is this article about?"
-            [control]="form.get('description')"
+            formControlName="description"
         />
         <mc-text-area
             inputId="body"
             placeholder="Write your article"
-            [control]="form.get('body')"
+            formControlName="body"
             [rows]="8"
         />
         <mc-input
             inputId="tags"
             type="text"
             placeholder="Enter tags"
-            [control]="form.get('tagList')"
+            formControlName="tagList"
         />
         <mc-button
             type="submit"
             [disabled]="creationMutation.isPending() || updateMutation.isPending()"
             [loading]="creationMutation.isPending() || updateMutation.isPending()"
         >
-            Publish 
-            @if (creationMutation.isPending() || updateMutation.isPending()) { 
-                ing 
-            } 
+            Publish
+            @if (creationMutation.isPending() || updateMutation.isPending()) {
+                ing
+            }
             Article
         </mc-button>
     </form>

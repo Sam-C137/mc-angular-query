@@ -1,13 +1,11 @@
-import { AuthenticatedActions } from "@entities";
-
 export function Protected(
-    target: AuthenticatedActions,
+    target: Object,
     propertyKey: string,
     descriptor: PropertyDescriptor,
 ) {
     const originalMethod = descriptor.value;
 
-    descriptor.value = async function (...args: unknown[]) {
+    descriptor.value = async function(...args: unknown[]) {
         // @ts-ignore
         if (!this.isAuthenticated) {
             // @ts-ignore

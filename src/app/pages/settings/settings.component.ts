@@ -32,13 +32,13 @@ import { User } from "@types";
     providers: [ProfileService],
 })
 export class SettingsComponent extends MCForm implements OnInit {
-    userService = inject(UserService);
-    profileService = inject(ProfileService);
-    tokenService = inject(TokenService);
-    router = inject(Router);
-    queryClient = injectQueryClient();
+    private userService = inject(UserService);
+    private profileService = inject(ProfileService);
+    private tokenService = inject(TokenService);
+    private router = inject(Router);
+    private queryClient = injectQueryClient();
 
-    profileMutation = injectMutation(() => ({
+    protected readonly profileMutation = injectMutation(() => ({
         mutationFn: (profile: { user: Partial<User> }) =>
             this.profileService.updateProfile(profile),
         onSuccess: async (data) => {
@@ -62,7 +62,7 @@ export class SettingsComponent extends MCForm implements OnInit {
         });
     }
 
-    submit() {
+    public submit() {
         if (this.form.valid || !this.profileMutation.isPending()) {
             this.profileMutation.mutate({
                 user: this.form.value,
@@ -70,7 +70,7 @@ export class SettingsComponent extends MCForm implements OnInit {
         }
     }
 
-    async logout() {
+    public async logout() {
         this.userService.logout();
         this.tokenService.clear();
         await this.queryClient.invalidateQueries({

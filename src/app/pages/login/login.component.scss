@@ -1,4 +1,4 @@
-@import "main";
+@use "main" as *;
 
 main {
   width: 100%;
@@ -34,7 +34,7 @@ main {
     margin-top: 1rem;
   }
 
-  p.error{
+  p.error {
     text-align: center;
     color: $red-1;
   }

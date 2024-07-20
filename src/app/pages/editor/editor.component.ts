@@ -36,9 +36,9 @@ export class EditorComponent extends MCForm implements OnDestroy {
     private articleService = inject(ArticlesService);
     private router = inject(Router);
 
-    queryClient = injectQueryClient();
+    private queryClient = injectQueryClient();
 
-    creationMutation = injectMutation(() => ({
+    protected readonly creationMutation = injectMutation(() => ({
         mutationFn: (article: Article) => this.articleService.create(article),
         onSuccess: async (article) => {
             await this.queryClient.invalidateQueries({
@@ -51,7 +51,7 @@ export class EditorComponent extends MCForm implements OnDestroy {
         },
     }));
 
-    updateMutation = injectMutation(() => ({
+    protected readonly updateMutation = injectMutation(() => ({
         mutationFn: (article: Article) =>
             this.articleService.update(article.slug, article),
         onSuccess: async (article) => {
@@ -75,7 +75,7 @@ export class EditorComponent extends MCForm implements OnDestroy {
         });
     }
 
-    submit() {
+    public submit() {
         if (!this.form.valid) return;
 
         const tags = this.form

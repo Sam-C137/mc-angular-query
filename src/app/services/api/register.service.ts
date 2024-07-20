@@ -22,7 +22,6 @@ export class RegisterService extends ApiService {
                         this.userService.user = response.user;
                         await this.router.navigate(["/"]);
                     }),
-                    catchError((error) => this.onError(error)),
                 ),
         );
     }

@@ -20,12 +20,11 @@ import { Title } from "@decorators";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticleDetailsComponent {
-    route = inject(ActivatedRoute);
-    slug = signal<string>("");
-    articlesService = inject(ArticlesService);
-
     @Title
-    title = "";
+    protected title = "";
+    private route = inject(ActivatedRoute);
+    private slug = signal<string>("");
+    private articlesService = inject(ArticlesService);
 
     constructor() {
         this.route.params.subscribe((params) => {
@@ -35,7 +34,7 @@ export class ArticleDetailsComponent {
         });
     }
 
-    query = injectQuery((client) => ({
+    protected readonly articleQuery = injectQuery(() => ({
         queryKey: ["article", this.slug()],
         queryFn: () => this.articlesService.getBySlug(this.slug()),
     }));

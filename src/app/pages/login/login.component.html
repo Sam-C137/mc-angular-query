@@ -2,13 +2,13 @@
     <form [formGroup]="form" (submit)="submit()">
         <h2>Login to your account</h2>
         <a [routerLink]="['/register']">Need an account?</a>
-        <p class="error">{{ mutation.error()?.message }}</p>
+        <p class="error">{{ registerMutation.error()?.message }}</p>
         <mc-input
             label="Email Address"
             inputId="login-email"
             type="email"
             placeholder="Enter your email address"
-            [control]="form.get('email')"
+            formControlName="email"
             [error]="formValidator.errors('email')"
         />
         <mc-input
@@ -17,13 +17,13 @@
             type="password"
             placeholder="Enter your password"
             iconRightUrl="assets/icons/eye.svg"
-            [control]="form.get('password')"
+            formControlName="password"
             [error]="formValidator.errors('password')"
         />
         <mc-button
             type="submit"
-            [disabled]="form.invalid || mutation.isPending()"
-            [loading]="mutation.isPending()"
+            [disabled]="form.invalid || registerMutation.isPending()"
+            [loading]="registerMutation.isPending()"
         >
             Submit
         </mc-button>

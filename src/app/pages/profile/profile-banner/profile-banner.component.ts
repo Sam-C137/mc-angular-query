@@ -18,7 +18,7 @@ import {
     providers: [ProfileService, FollowersService],
 })
 export class ProfileBannerComponent {
-    public user = inject(UserService).user;
+    protected user = inject(UserService).user;
     private route = inject(ActivatedRoute);
     private username = "";
     private profile = inject(ProfileService);
@@ -30,12 +30,12 @@ export class ProfileBannerComponent {
         });
     }
 
-    protected profileQuery = injectQuery(() => ({
+    protected readonly profileQuery = injectQuery(() => ({
         queryKey: ["profile", this.username],
         queryFn: () => this.profile.getProfile(this.username),
     }));
 
-    followMutation = injectMutation((client) => ({
+    protected readonly followMutation = injectMutation((client) => ({
         mutationFn: (username: string) =>
             this.followersService.follow(username),
         onSuccess: async () => {
@@ -48,7 +48,7 @@ export class ProfileBannerComponent {
         },
     }));
 
-    unfollowMutation = injectMutation((client) => ({
+    protected readonly unfollowMutation = injectMutation((client) => ({
         mutationFn: (username: string) =>
             this.followersService.unfollow(username),
         onSuccess: async () => {

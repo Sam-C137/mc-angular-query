@@ -1,18 +1,16 @@
-import { ApplicationConfig } from "@angular/core";
+import { ApplicationConfig, ErrorHandler } from "@angular/core";
 import { provideRouter } from "@angular/router";
-import {
-    provideAngularQuery,
-    QueryClient,
-} from "@tanstack/angular-query-experimental";
+import { provideAngularQuery, QueryClient } from "@tanstack/angular-query-experimental";
 
 import { routes } from "./app.routes";
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
-import { tokenInterceptor } from "@interceptors";
+import { errorInterceptor, tokenInterceptor } from "@interceptors";
+import { CustomErrorHandler } from "@models";
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideRouter(routes),
-        provideHttpClient(withInterceptors([tokenInterceptor])),
+        provideHttpClient(withInterceptors([tokenInterceptor, errorInterceptor])),
         provideAngularQuery(
             new QueryClient({
                 defaultOptions: {
@@ -23,5 +21,9 @@ export const appConfig: ApplicationConfig = {
                 },
             }),
         ),
+        {
+            provide: ErrorHandler,
+            useClass: CustomErrorHandler,
+        },
     ],
 };

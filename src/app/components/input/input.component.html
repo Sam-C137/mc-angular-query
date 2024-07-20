@@ -1,46 +1,28 @@
-<span class="position-relative">
-    <label [for]="inputId()">
-        {{ label() }}
-        @if (required()) {
-            <i>*</i>
-        }
-    </label>
-    <div class="input focusable" #base>
-        <img [src]="iconLeftUrl()" data-visible="true" #iconLeft alt="" />
-        <input
-            preventLeadingSpace
-            [id]="inputId()"
-            [type]="type()"
-            [placeholder]="placeholder()"
-            [required]="required()"
-            [autocomplete]="autocomplete()"
-            [formControl]="control()"
-            (focus)="
-                base.classList.toggle('focus');
-                error() ? base.classList.toggle('focus-error') : null;
-            "
-            (blur)="
-                base.classList.remove('focus');
-                error() ? null : base.classList.remove('focus-error');
-            "
-            [value]="control().value"
-            #input
-        />
-
-        <img
-            (click)="togglePasswordVisibility(input)"
-            [src]="iconRightUrl()"
-            alt=""
-            data-visible="false"
-            #iconRight
-        />
-
-        <img
-            src="assets/icons/error.svg"
-            data-visible="false"
-            alt=""
-            #iconError
-        />
-    </div>
-    <p class="error">{{ error() }}</p>
-</span>
+<label [for]="inputId()">
+    {{ label() }}
+    @if (required()) {
+        <i>*</i>
+    }
+</label>
+<div class="input focusable" #base>
+    <input
+        preventLeadingSpace
+        [id]="inputId()"
+        [type]="type()"
+        [placeholder]="placeholder()"
+        [required]="required()"
+        [autocomplete]="autocomplete()"
+        (focus)="
+            base.classList.toggle('focus');
+            error() ? base.classList.toggle('focus-error') : null;
+        "
+        (blur)="
+            base.classList.remove('focus');
+            error() ? null : base.classList.remove('focus-error');
+        "
+        *ngIf="control"
+        [formControl]="control"
+        #input
+    />
+</div>
+<p class="error">{{ error() }}</p>

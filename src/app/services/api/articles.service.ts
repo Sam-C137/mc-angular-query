@@ -8,7 +8,7 @@ import {
     Tag,
     User,
 } from "@types";
-import { catchError, from, lastValueFrom, map } from "rxjs";
+import { lastValueFrom, map } from "rxjs";
 
 type ArticleExtras = {
     tag: Tag;
@@ -24,15 +24,13 @@ export class ArticlesService extends ApiService {
         isFeed: boolean = false,
     ): Promise<AllArticles> {
         return lastValueFrom(
-            this.http
-                .get<AllArticles>(
-                    `${this.baseUrl}/articles${isFeed ? "/feed" : ""}`,
-                    {
-                        headers: this.headers.headers,
-                        params,
-                    },
-                )
-                .pipe(catchError((error) => this.onError(error))),
+            this.http.get<AllArticles>(
+                `${this.baseUrl}/articles${isFeed ? "/feed" : ""}`,
+                {
+                    headers: this.headers.headers,
+                    params,
+                },
+            ),
         );
     }
 
@@ -43,10 +41,7 @@ export class ArticlesService extends ApiService {
                     `${this.baseUrl}/articles/${slug}/favorite`,
                     {},
                 )
-                .pipe(
-                    map((data) => data.article),
-                    catchError((error) => this.onError(error)),
-                ),
+                .pipe(map((data) => data.article)),
         );
     }
 
@@ -56,10 +51,7 @@ export class ArticlesService extends ApiService {
                 .delete<{ article: Article }>(
                     `${this.baseUrl}/articles/${slug}/favorite`,
                 )
-                .pipe(
-                    map((data) => data.article),
-                    catchError((error) => this.onError(error)),
-                ),
+                .pipe(map((data) => data.article)),
         );
     }
 
@@ -67,10 +59,7 @@ export class ArticlesService extends ApiService {
         return lastValueFrom(
             this.http
                 .get<{ article: Article }>(`${this.baseUrl}/articles/${slug}`)
-                .pipe(
-                    map((data) => data.article),
-                    catchError((error) => this.onError(error)),
-                ),
+                .pipe(map((data) => data.article)),
         );
     }
 
@@ -80,10 +69,7 @@ export class ArticlesService extends ApiService {
                 .delete<{ article: Article }>(
                     `${this.baseUrl}/articles/${slug}`,
                 )
-                .pipe(
-                    map((data) => data.article),
-                    catchError((error) => this.onError(error)),
-                ),
+                .pipe(map((data) => data.article)),
         );
     }
 
@@ -93,10 +79,7 @@ export class ArticlesService extends ApiService {
                 .post<{ article: Article }>(`${this.baseUrl}/articles`, {
                     article,
                 })
-                .pipe(
-                    map((data) => data.article),
-                    catchError((error) => this.onError(error)),
-                ),
+                .pipe(map((data) => data.article)),
         );
     }
 
@@ -106,10 +89,7 @@ export class ArticlesService extends ApiService {
                 .put<{ article: Article }>(`${this.baseUrl}/articles/${slug}`, {
                     article,
                 })
-                .pipe(
-                    map((data) => data.article),
-                    catchError((error) => this.onError(error)),
-                ),
+                .pipe(map((data) => data.article)),
         );
     }
 }

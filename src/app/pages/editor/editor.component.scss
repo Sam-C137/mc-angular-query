@@ -1,4 +1,4 @@
-@import "main";
+@use "main" as *;
 
 main {
   width: 100%;
@@ -9,9 +9,11 @@ main {
   form {
     margin-top: 3rem;
     width: 70%;
+
     & > * {
       margin-top: 1rem;
     }
+
     @include lg {
       width: 60%;
     }
