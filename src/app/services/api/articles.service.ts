@@ -1,14 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "@entities";
-import {
-    AllArticles,
-    Article,
-    NewArticle,
-    PaginationParams,
-    Tag,
-    User,
-} from "@types";
-import { lastValueFrom, map } from "rxjs";
+import { AllArticles, Article, NewArticle, PaginationParams, Tag, User } from "@types";
+import { lastValueFrom, map, tap } from "rxjs";
 
 type ArticleExtras = {
     tag: Tag;
@@ -69,7 +62,10 @@ export class ArticlesService extends ApiService {
                 .delete<{ article: Article }>(
                     `${this.baseUrl}/articles/${slug}`,
                 )
-                .pipe(map((data) => data.article)),
+                .pipe(tap(async () => {
+                        await this.router.navigate(["/profile", this.user?.username]);
+                    }),
+                    map((data) => data.article)),
         );
     }
 

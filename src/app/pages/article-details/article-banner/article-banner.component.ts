@@ -1,16 +1,16 @@
 import { CommonModule } from "@angular/common";
-import {
-    ChangeDetectionStrategy,
-    Component,
-    inject,
-    input,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, input } from "@angular/core";
 import { RouterLink } from "@angular/router";
-import { ArticlesService, FollowersService } from "@api";
 import { AuthenticatedActions } from "@entities";
-import { injectMutation } from "@tanstack/angular-query-experimental";
 import { Article } from "@types";
 import { Protected } from "@decorators";
+import {
+    createFavoriteArticleMutation,
+    createProfileMutation,
+} from "./article-banner.component.queries";
+
+type ArticleQueryResults = ReturnType<typeof createFavoriteArticleMutation>;
+type ProfileQueryResults = ReturnType<typeof createProfileMutation>;
 
 @Component({
     selector: "mc-article-banner",
@@ -22,87 +22,52 @@ import { Protected } from "@decorators";
 })
 export class ArticleBannerComponent extends AuthenticatedActions {
     article = input.required<Article>();
-    articleService = inject(ArticlesService);
-    followersService = inject(FollowersService);
+    protected favoriteMutation?: ArticleQueryResults["favorite"];
+    protected unfavoriteMutation?: ArticleQueryResults["favorite"];
+    protected deleteMutation?: ArticleQueryResults["delete"];
+    protected followMutation?: ProfileQueryResults["follow"];
+    protected unfollowMutation?: ProfileQueryResults["unfollow"];
 
-    favoriteMutation = injectMutation((client) => ({
-        mutationFn: (slug: string) => this.articleService.favorite(slug),
-        onSuccess: async () => {
-            await client.invalidateQueries({
-                queryKey: ["home-articles"],
-            });
-            await client.invalidateQueries({
-                queryKey: ["article", this.article().slug],
-            });
-        },
-    }));
-
-    unfavoriteMutation = injectMutation((client) => ({
-        mutationFn: (slug: string) => this.articleService.unfavorite(slug),
-        onSuccess: async () => {
-            await client.invalidateQueries({
-                queryKey: ["home-articles"],
-            });
-            await client.invalidateQueries({
-                queryKey: ["article", this.article().slug],
-            });
-        },
-    }));
-
-    deleteMutation = injectMutation((client) => ({
-        mutationFn: (slug: string) => this.articleService.delete(slug),
-        onSuccess: async () => {
-            await client.invalidateQueries({
-                queryKey: ["home-articles"],
-            });
-            await client.invalidateQueries({
-                queryKey: ["article", this.article().slug],
-            });
-            await this.router.navigate(["/profile", this.user?.username]);
-        },
-    }));
-
-    followMutation = injectMutation((client) => ({
-        mutationFn: (username: string) =>
-            this.followersService.follow(username),
-        onSuccess: async () => {
-            await client.invalidateQueries({
-                queryKey: ["article", this.article().slug],
-            });
-        },
-    }));
-
-    unfollowMutation = injectMutation((client) => ({
-        mutationFn: (username: string) =>
-            this.followersService.unfollow(username),
-        onSuccess: async () => {
-            await client.invalidateQueries({
-                queryKey: ["article", this.article().slug],
-            });
-        },
-    }));
+    constructor() {
+        super();
+        this.initializeQueries();
+    }
 
     @Protected
     followAuthor(authorname: Article["author"]["username"]) {
-        this.followMutation.mutate(authorname);
+        this.followMutation?.mutate(authorname);
     }
 
     @Protected
     unfollowAuthor(authorname: Article["author"]["username"]) {
-        this.unfollowMutation.mutate(authorname);
+        this.unfollowMutation?.mutate(authorname);
     }
 
     @Protected
     deleteArticle(slug: Article["slug"]) {
-        this.deleteMutation.mutate(slug);
+        this.deleteMutation?.mutate(slug);
     }
 
     @Protected
     favoriteArticle(slug: Article["slug"]) {
-        this.favoriteMutation.mutate(slug);
+        this.favoriteMutation?.mutate(slug);
     }
+
     @Protected
     unfavoriteArticle(slug: Article["slug"]) {
-        this.unfavoriteMutation.mutate(slug);
+        this.unfavoriteMutation?.mutate(slug);
+    }
+
+    private initializeQueries() {
+        const {
+            favorite,
+            unfavorite,
+            delete: deleteMut,
+        } = createFavoriteArticleMutation();
+        this.favoriteMutation = favorite;
+        this.unfavoriteMutation = unfavorite;
+        this.deleteMutation = deleteMut;
+        const { follow, unfollow } = createProfileMutation();
+        (this.followMutation = follow), (this.unfollowMutation = unfollow);
     }
 }

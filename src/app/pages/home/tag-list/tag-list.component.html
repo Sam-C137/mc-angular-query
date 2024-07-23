@@ -1,17 +1,18 @@
 <summary>
     <h2>Popular Tags</h2>
 
-    @if (query.isPending()) {
+    @if (tagsQuery.isPending()) {
         <mc-spinner />
-    } @else if (query.isError()) {
-        <p>{{ query.error().message }}</p>
+    } @else if (tagsQuery.isError()) {
+        <p>{{ tagsQuery.error().message }}</p>
     } @else {
         <ul>
-            @for (tag of query.data()?.tags; track $index) {
+            @for (tag of tagsQuery.data()?.tags; track $index) {
                 <li
                     (click)="selectedTag.set(tag)"
                     [class.active]="selectedTag() === tag"
-                >{{ tag }}</li>
+                >{{ tag }}
+                </li>
             }
         </ul>
     }

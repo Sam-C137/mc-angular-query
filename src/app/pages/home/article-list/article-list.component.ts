@@ -1,10 +1,9 @@
 import { DatePipe } from "@angular/common";
-import { ChangeDetectionStrategy, Component, inject, input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, input } from "@angular/core";
 import { RouterLink } from "@angular/router";
-import { ArticlesService } from "@api";
-import { injectMutation } from "@tanstack/angular-query-experimental";
 import { Article } from "@types";
-import { IsAuthenticatedDirective } from "../../../libs/directives/is-authenticated.directive";
+import { IsAuthenticatedDirective } from "@directives";
+import { createFavoriteArticleMutation } from "./article-list.component.queries";
 
 @Component({
     selector: "mc-article-list",
@@ -16,25 +15,14 @@ import { IsAuthenticatedDirective } from "../../../libs/directives/is-authentica
 })
 export class ArticleListComponent {
     articles = input.required<Article[]>();
-    private articlesService = inject(ArticlesService);
+    protected readonly favoriteMutation;
+    protected readonly unFavoriteMutation;
 
-    protected readonly favoriteMutation = injectMutation((client) => ({
-        mutationFn: (slug: string) => this.articlesService.favorite(slug),
-        onSuccess: async () => {
-            await client.invalidateQueries({
-                queryKey: ["home-articles"],
-            });
-        },
-    }));
-
-    protected readonly unFavoriteMutation = injectMutation((client) => ({
-        mutationFn: (slug: string) => this.articlesService.unfavorite(slug),
-        onSuccess: async () => {
-            await client.invalidateQueries({
-                queryKey: ["home-articles"],
-            });
-        },
-    }));
+    constructor() {
+        const { favorite, unfavorite } = createFavoriteArticleMutation();
+        this.favoriteMutation = favorite;
+        this.unFavoriteMutation = unfavorite;
+    }
 
     favoriteArticle(slug: Article["slug"], isFavorited: boolean) {
         if (isFavorited) {

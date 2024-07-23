@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, input } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ReactiveFormsModule } from "@angular/forms";
-import { PreventLeadingSpace } from "@directives";
+import { BaseValueAccessorDirective, PreventLeadingSpace } from "@directives";
 import { NgIf } from "@angular/common";
-import { BaseValueAccessorDirective } from "../../libs/directives/base-value-accessor.directive";
 
 @Component({
     selector: "mc-input",

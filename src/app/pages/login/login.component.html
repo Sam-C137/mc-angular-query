@@ -2,7 +2,7 @@
     <form [formGroup]="form" (submit)="submit()">
         <h2>Login to your account</h2>
         <a [routerLink]="['/register']">Need an account?</a>
-        <p class="error">{{ registerMutation.error()?.message }}</p>
+        <p class="error">{{ loginMutation.error()?.message }}</p>
         <mc-input
             label="Email Address"
             inputId="login-email"
@@ -22,8 +22,8 @@
         />
         <mc-button
             type="submit"
-            [disabled]="form.invalid || registerMutation.isPending()"
-            [loading]="registerMutation.isPending()"
+            [disabled]="form.invalid || loginMutation.isPending()"
+            [loading]="loginMutation.isPending()"
         >
             Submit
         </mc-button>

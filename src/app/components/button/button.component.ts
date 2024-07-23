@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, input } from "@angular/core";
-import { HasDisabledStateDirective } from "../../libs/directives/has-disabled-state.directive";
+import { HasDisabledStateDirective } from "@directives";
 
 @Component({
     selector: "mc-button",

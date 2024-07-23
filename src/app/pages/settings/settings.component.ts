@@ -1,21 +1,12 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    OnInit,
-    inject,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, OnInit } from "@angular/core";
 import { ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ProfileService } from "@api";
-import {
-    ButtonComponent,
-    InputComponent,
-    TextAreaComponent,
-} from "@components";
+import { ButtonComponent, InputComponent, TextAreaComponent } from "@components";
 import { MCForm } from "@entities";
 import { TokenService, UserService } from "@state";
-import { injectMutation, injectQueryClient } from "@tanstack/angular-query-experimental";
-import { User } from "@types";
+import { injectQueryClient } from "@tanstack/angular-query-experimental";
+import { createProfileMutation } from "./settings.component.queries";
 
 @Component({
     selector: "mc-settings",
@@ -33,18 +24,10 @@ import { User } from "@types";
 })
 export class SettingsComponent extends MCForm implements OnInit {
     private userService = inject(UserService);
-    private profileService = inject(ProfileService);
     private tokenService = inject(TokenService);
     private router = inject(Router);
     private queryClient = injectQueryClient();
-
-    protected readonly profileMutation = injectMutation(() => ({
-        mutationFn: (profile: { user: Partial<User> }) =>
-            this.profileService.updateProfile(profile),
-        onSuccess: async (data) => {
-            await this.router.navigate(["/profile", data.user.username]);
-        },
-    }));
+    protected readonly profileMutation = createProfileMutation();
 
     ngOnInit() {
         this.form = this.setupForm();
@@ -73,9 +56,7 @@ export class SettingsComponent extends MCForm implements OnInit {
     public async logout() {
         this.userService.logout();
         this.tokenService.clear();
-        await this.queryClient.invalidateQueries({
-          queryKey: ["home-articles"]
-        });
+        await this.queryClient.invalidateQueries();
         await this.router.navigate([""]);
     }
 }

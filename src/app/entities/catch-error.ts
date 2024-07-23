@@ -2,7 +2,7 @@ import { ErrorHandler, inject, Injectable, NgZone } from "@angular/core";
 
 
 @Injectable()
-export class CustomErrorHandler implements ErrorHandler {
+export class CatchError implements ErrorHandler {
     private zone = inject(NgZone);
 
     handleError(error: unknown) {

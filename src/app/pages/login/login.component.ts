@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { ReactiveFormsModule, Validators } from "@angular/forms";
 import { RouterLink } from "@angular/router";
-import { LoginService } from "@api";
 import { ButtonComponent, InputComponent } from "@components";
 import { Title } from "@decorators";
 import { MCForm } from "@entities";
-import { injectMutation } from "@tanstack/angular-query-experimental";
+import { AuthenticationService } from "@api";
+import { createLoginMutation } from "./login.component.queries";
 
 @Component({
     selector: "mc-login",
@@ -14,27 +14,12 @@ import { injectMutation } from "@tanstack/angular-query-experimental";
     templateUrl: "./login.component.html",
     styleUrl: "./login.component.scss",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [LoginService],
+    providers: [AuthenticationService],
 })
 export class LoginComponent extends MCForm {
     @Title
     readonly title = "Login";
-
-    private loginService = inject(LoginService);
-
-    protected readonly registerMutation = injectMutation((client) => ({
-        mutationFn: (credentials: {
-            user: {
-                email: string;
-                password: string;
-            };
-        }) => this.loginService.login(credentials),
-        onSuccess: async () => {
-            await client.invalidateQueries({
-                queryKey: ["home-articles"],
-            });
-        },
-    }));
+    protected readonly loginMutation = createLoginMutation();
 
     override setupForm() {
         return this.fb.group({
@@ -44,8 +29,8 @@ export class LoginComponent extends MCForm {
     }
 
     public submit() {
-        if (this.form.valid || !this.registerMutation.isPending()) {
-            this.registerMutation.mutate({
+        if (this.form.valid || !this.loginMutation.isPending()) {
+            this.loginMutation.mutate({
                 user: this.form.value,
             });
         }

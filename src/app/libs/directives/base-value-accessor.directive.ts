@@ -70,11 +70,11 @@ export class BaseValueAccessorDirective<T>
     registerOnChange(fn: (value: T) => void): void {
         this.control?.valueChanges
             .pipe(
-                takeUntil(this.destroyer$),
                 startWith(this.control?.value),
                 distinctUntilChanged(),
                 tap((val) => fn(val)),
                 tap(() => this.control?.markAsTouched()),
+                takeUntil(this.destroyer$),
             )
             .subscribe();
     }

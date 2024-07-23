@@ -23,7 +23,7 @@
             <button 
                 class="delete"
                 (click)="deleteArticle(article().slug)"
-                [disabled]="deleteMutation.isPending()"
+                [disabled]="deleteMutation!.isPending()"
             >   
                 Delete Article
             </button>
@@ -37,7 +37,7 @@
                 <button 
                     class="follow active"
                     (click)="unfollowAuthor(article().author.username)"
-                    [disabled]="unfollowMutation.isPending()"
+                    [disabled]="unfollowMutation!.isPending()"
                 >
                     Unfollow {{ article().author.username }}
                 </button>
@@ -45,7 +45,7 @@
                 <button 
                     class="follow"
                     (click)="followAuthor(article().author.username)"
-                    [disabled]="followMutation.isPending()"
+                    [disabled]="followMutation!.isPending()"
                 >
                     Follow {{ article().author.username }}
                 </button>
@@ -53,7 +53,7 @@
                 <button 
                     class="favourite active"
                     (click)="unfavoriteArticle(article().slug)"
-                    [disabled]="unfavoriteMutation.isPending()"
+                    [disabled]="unfavoriteMutation!.isPending()"
                 >
                     Unfavorite Article ({{ article().favoritesCount }})
                 </button>
@@ -61,7 +61,7 @@
                 <button
                     class="favourite"
                     (click)="favoriteArticle(article().slug)"
-                    [disabled]="favoriteMutation.isPending()"
+                    [disabled]="favoriteMutation!.isPending()"
                 >
                     Favorite Article ({{ article().favoritesCount }})
                 </button>

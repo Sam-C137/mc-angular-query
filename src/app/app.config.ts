@@ -1,11 +1,10 @@
 import { ApplicationConfig, ErrorHandler } from "@angular/core";
 import { provideRouter } from "@angular/router";
 import { provideAngularQuery, QueryClient } from "@tanstack/angular-query-experimental";
-
 import { routes } from "./app.routes";
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
 import { errorInterceptor, tokenInterceptor } from "@interceptors";
-import { CustomErrorHandler } from "@models";
+import { CatchError } from "@entities";
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -23,7 +22,7 @@ export const appConfig: ApplicationConfig = {
         ),
         {
             provide: ErrorHandler,
-            useClass: CustomErrorHandler,
+            useClass: CatchError,
         },
     ],
 };

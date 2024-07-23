@@ -1,23 +1,13 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    OnDestroy,
-    inject,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnDestroy } from "@angular/core";
 import { ReactiveFormsModule, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { ArticlesService } from "@api";
 import {
     ButtonComponent,
     InputComponent,
     TextAreaComponent,
 } from "@components";
 import { MCForm } from "@entities";
-import {
-    injectMutation,
-    injectQueryClient,
-} from "@tanstack/angular-query-experimental";
 import { Article } from "@types";
+import { createArticleMutation } from "./editor.component.queries";
 
 @Component({
     selector: "mc-editor",
@@ -33,37 +23,15 @@ import { Article } from "@types";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorComponent extends MCForm implements OnDestroy {
-    private articleService = inject(ArticlesService);
-    private router = inject(Router);
+    protected readonly creationMutation;
+    protected readonly updateMutation;
 
-    private queryClient = injectQueryClient();
-
-    protected readonly creationMutation = injectMutation(() => ({
-        mutationFn: (article: Article) => this.articleService.create(article),
-        onSuccess: async (article) => {
-            await this.queryClient.invalidateQueries({
-                queryKey: ["home-articles"],
-            });
-            await this.queryClient.invalidateQueries({
-                queryKey: ["article", article.slug],
-            });
-            await this.router.navigate(["/article", article.slug]);
-        },
-    }));
-
-    protected readonly updateMutation = injectMutation(() => ({
-        mutationFn: (article: Article) =>
-            this.articleService.update(article.slug, article),
-        onSuccess: async (article) => {
-            await this.queryClient.invalidateQueries({
-                queryKey: ["home-articles"],
-            });
-            await this.queryClient.invalidateQueries({
-                queryKey: ["article", article.slug],
-            });
-            await this.router.navigate(["/article", article.slug]);
-        },
-    }));
+    constructor() {
+        super();
+        const { create, update } = createArticleMutation();
+        this.creationMutation = create;
+        this.updateMutation = update;
+    }
 
     override setupForm() {
         const { article } = history.state as { article?: Article };
@@ -71,7 +39,7 @@ export class EditorComponent extends MCForm implements OnDestroy {
             title: [article?.title || "", [Validators.required]],
             description: [article?.description || "", [Validators.required]],
             body: [article?.body || "", Validators.required],
-            tagList: [article?.tagList.join(", ") || "", Validators.required],
+            tagList: [article?.tagList.join(", ") || ""],
         });
     }
 
@@ -86,8 +54,8 @@ export class EditorComponent extends MCForm implements OnDestroy {
 
         if (article) {
             this.updateMutation.mutate({
-                ...this.form.value,
                 ...article,
+                ...this.form.value,
                 tagList: tags,
             });
         } else {

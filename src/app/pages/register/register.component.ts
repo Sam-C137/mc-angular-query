@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { ReactiveFormsModule, Validators } from "@angular/forms";
 import { RouterLink } from "@angular/router";
 import { ButtonComponent, InputComponent } from "@components";
 import { MCForm } from "@entities";
-import { RegisterService } from "@api";
-import { injectMutation } from "@tanstack/angular-query-experimental";
 import { Title } from "@decorators";
+import { AuthenticationService } from "@api";
+import { createRegisterMutation } from "./register.component.queries";
 
 @Component({
     selector: "mc-register",
@@ -14,22 +14,12 @@ import { Title } from "@decorators";
     templateUrl: "./register.component.html",
     styleUrl: "./register.component.scss",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [RegisterService],
+    providers: [AuthenticationService],
 })
 export class RegisterComponent extends MCForm {
     @Title
     readonly title = "Register";
-    private registerService = inject(RegisterService);
-
-     protected readonly registerMutation = injectMutation((client) => ({
-        mutationFn: (credentials: {
-            user: {
-                username: string;
-                email: string;
-                password: string;
-            };
-        }) => this.registerService.register(credentials),
-    }));
+    protected readonly registerMutation = createRegisterMutation();
 
     override setupForm() {
         return this.fb.group({

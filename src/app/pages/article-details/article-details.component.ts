@@ -1,15 +1,9 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    inject,
-    signal,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, signal } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { ArticlesService } from "@api";
 import { ErrorHandlerComponent, SpinnerComponent } from "@components";
-import { injectQuery } from "@tanstack/angular-query-experimental";
 import { ArticleBannerComponent } from "./article-banner/article-banner.component";
 import { Title } from "@decorators";
+import { createArticleQuery } from "./article-details.component.queries";
 
 @Component({
     selector: "mc-article-details",
@@ -24,7 +18,7 @@ export class ArticleDetailsComponent {
     protected title = "";
     private route = inject(ActivatedRoute);
     private slug = signal<string>("");
-    private articlesService = inject(ArticlesService);
+    protected readonly articleQuery = createArticleQuery(this.slug);
 
     constructor() {
         this.route.params.subscribe((params) => {
@@ -33,9 +27,4 @@ export class ArticleDetailsComponent {
             this.title = slug.split("-").join(" ");
         });
     }
-
-    protected readonly articleQuery = injectQuery(() => ({
-        queryKey: ["article", this.slug()],
-        queryFn: () => this.articlesService.getBySlug(this.slug()),
-    }));
 }

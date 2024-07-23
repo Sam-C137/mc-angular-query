@@ -5,6 +5,32 @@ import {
     ValidatorFn,
 } from "@angular/forms";
 
+const errorCodes = new Set([
+    "required",
+    "minlength",
+    "email",
+    "invalidName",
+    "invalidPassword",
+    "passwordMismatch",
+    "invalidFileType",
+    "invalidFileSize",
+    "invalidPhoneNumber",
+]);
+
+const DEFAULT_ERROR_MESSAGES = {
+    required: "This field is required",
+    minlength: "This field must be at least 4 characters long",
+    email: "Email must be a valid email address",
+    invalidName:
+        "Name must contain a first part, followed by a space, then a last part",
+    invalidPassword:
+        "Password must contain at least one uppercase letter and a number",
+    passwordMismatch: "Passwords must match",
+    invalidFileType: "Invalid file type. Please upload a PNG file",
+    invalidFileSize: "Uploaded file must be less than 5mb",
+    invalidPhoneNumber: "Phone number must be 10 digits",
+};
+
 export class FormValidator {
     private field: string = "";
 
@@ -16,52 +42,15 @@ export class FormValidator {
         const control = this.form.get(this.field);
 
         if (control?.invalid && control.touched) {
-            if (control.hasError("required")) {
-                return (
-                    this.messages.get("required") || "This field is required"
-                );
-            } else if (control.hasError("minlength")) {
-                return (
-                    this.messages.get("minlength") ||
-                    `${this.field} must be at least
-                     4
-                     characters long`
-                );
-            } else if (control.hasError("email")) {
-                return (
-                    this.messages.get("email") ||
-                    "Email must be a valid email address"
-                );
-            } else if (control.hasError("invalidName")) {
-                return (
-                    this.messages.get("invalidName") ||
-                    "Name must contain a first part, followed by a space, then a last part"
-                );
-            } else if (control.hasError("invalidPassword")) {
-                return (
-                    this.messages.get("invalidPassword") ||
-                    "Password must contain at least one uppercase letter and a number"
-                );
-            } else if (control.hasError("passwordMismatch")) {
-                return (
-                    this.messages.get("passwordMismatch") ||
-                    "Passwords must match"
-                );
-            } else if (control.hasError("invalidFileType")) {
-                return (
-                    this.messages.get("invalidFileType") ||
-                    "Invalid file type. Please upload a PNG file"
-                );
-            } else if (control.hasError("invalidFileSize")) {
-                return (
-                    this.messages.get("invalidFileSize") ||
-                    "Uploaded file must be less than 5mb"
-                );
-            } else if (control.hasError("invalidPhoneNumber")) {
-                return (
-                    this.messages.get("invalidPhoneNumber") ||
-                    "Phone number must be 10 digits"
-                );
+            for (const errorCode of errorCodes) {
+                if (control.hasError(errorCode)) {
+                    return (
+                        this.messages.get(errorCode) ||
+                        DEFAULT_ERROR_MESSAGES[
+                            errorCode as keyof typeof DEFAULT_ERROR_MESSAGES
+                        ]
+                    );
+                }
             }
         }
 
