@@ -1,6 +1,7 @@
 import { injectMutation } from "@tanstack/angular-query-experimental";
 import { inject } from "@angular/core";
 import { AuthenticationService } from "@api";
+import { Email } from "@types";
 
 export function createRegisterMutation() {
     const authenticationService = inject(AuthenticationService);
@@ -9,7 +10,7 @@ export function createRegisterMutation() {
         mutationFn: (credentials: {
             user: {
                 username: string;
-                email: string;
+                email: Email;
                 password: string;
             };
         }) => authenticationService.register(credentials),

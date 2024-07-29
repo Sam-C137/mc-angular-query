@@ -1,7 +1,7 @@
 import { injectMutation } from "@tanstack/angular-query-experimental";
 import { inject } from "@angular/core";
 import { AuthenticationService } from "@api";
-
+import { Email } from "@types";
 
 export function createLoginMutation() {
     const authenticationService = inject(AuthenticationService);
@@ -9,7 +9,7 @@ export function createLoginMutation() {
     return injectMutation((client) => ({
         mutationFn: (credentials: {
             user: {
-                email: string;
+                email: Email;
                 password: string;
             };
         }) => authenticationService.login(credentials),

@@ -1,12 +1,24 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from "@angular/core";
-import { ReactiveFormsModule, Validators } from "@angular/forms";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    OnInit,
+} from "@angular/core";
+import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ProfileService } from "@api";
-import { ButtonComponent, InputComponent, TextAreaComponent } from "@components";
-import { MCForm } from "@entities";
+import {
+    ButtonComponent,
+    InputComponent,
+    TextAreaComponent,
+} from "@components";
+import { BaseForm } from "@entities";
 import { TokenService, UserService } from "@state";
 import { injectQueryClient } from "@tanstack/angular-query-experimental";
 import { createProfileMutation } from "./settings.component.queries";
+import { Email, FormField, User } from "@types";
+
+const fields = ["image", "username", "bio", "email", "password"];
 
 @Component({
     selector: "mc-settings",
@@ -22,7 +34,14 @@ import { createProfileMutation } from "./settings.component.queries";
     changeDetection: ChangeDetectionStrategy.OnPush,
     providers: [ProfileService],
 })
-export class SettingsComponent extends MCForm implements OnInit {
+export class SettingsComponent
+    extends BaseForm<{
+        [K in (typeof fields)[number]]: FormControl<
+            K extends "email" ? Email : string
+        >;
+    }>
+    implements OnInit
+{
     private userService = inject(UserService);
     private tokenService = inject(TokenService);
     private router = inject(Router);
@@ -36,7 +55,11 @@ export class SettingsComponent extends MCForm implements OnInit {
     override setupForm() {
         const user = this.userService?.user;
 
-        return this.fb.group({
+        return this.nfb.group<{
+            [K in keyof User & { password: string }]: FormField<
+                K extends "email" ? Email : string
+            >;
+        }>({
             image: [user?.image || ""],
             username: [user?.username || "", [Validators.minLength(4)]],
             bio: [user?.bio || ""],

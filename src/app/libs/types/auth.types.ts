@@ -1,11 +1,11 @@
-import { User } from "@types";
+import { Email, User } from "@types";
 
 /**
  *  Login
  */
 export type LoginUserDetails = {
     user: {
-        email: string;
+        email: Email;
         password: string;
     };
 };
@@ -24,7 +24,7 @@ export type BackendErrors = {
 export type SignUpUserDetails = {
     user: {
         username: string;
-        email: string;
+        email: Email;
         password: string;
     };
 };

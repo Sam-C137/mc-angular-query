@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from "@angular/core";
-import { ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import {
     ButtonComponent,
     InputComponent,
     TextAreaComponent,
 } from "@components";
-import { MCForm } from "@entities";
-import { Article } from "@types";
+import { BaseForm } from "@entities";
+import { Article, FormField } from "@types";
 import { createArticleMutation } from "./editor.component.queries";
+
+const fields = ["image", "username", "bio", "email", "password"];
 
 @Component({
     selector: "mc-editor",
@@ -22,7 +24,12 @@ import { createArticleMutation } from "./editor.component.queries";
     styleUrl: "./editor.component.scss",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditorComponent extends MCForm implements OnDestroy {
+export class EditorComponent
+    extends BaseForm<{
+        [K in (typeof fields)[number]]: FormControl<string>;
+    }>
+    implements OnDestroy
+{
     protected readonly creationMutation;
     protected readonly updateMutation;
 
@@ -35,21 +42,25 @@ export class EditorComponent extends MCForm implements OnDestroy {
 
     override setupForm() {
         const { article } = history.state as { article?: Article };
-        return this.fb.group({
+        return this.nfb.group<{
+            [K in (typeof fields)[number]]: FormField<string>;
+        }>({
             title: [article?.title || "", [Validators.required]],
             description: [article?.description || "", [Validators.required]],
-            body: [article?.body || "", Validators.required],
-            tagList: [article?.tagList.join(", ") || ""],
+            body: [article?.body || "", [Validators.required]],
+            tagList: [article?.tagList.join(", ") || "", []],
         });
     }
 
     public submit() {
         if (!this.form.valid) return;
 
-        const tags = this.form
-            .get("tagList")
-            ?.value.split(/\s+|,|;/)
-            .filter(Boolean);
+        const tags =
+            this.form
+                .get("tagList")
+                ?.value.split(/\s+|,|;/)
+                .filter(Boolean) || [];
+
         const { article } = history.state as { article?: Article };
 
         if (article) {
@@ -62,7 +73,7 @@ export class EditorComponent extends MCForm implements OnDestroy {
             this.creationMutation.mutate({
                 ...this.form.value,
                 tagList: tags,
-            });
+            } as Article);
         }
     }
 
