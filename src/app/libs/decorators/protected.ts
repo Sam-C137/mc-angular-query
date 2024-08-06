@@ -7,11 +7,9 @@ export function Protected(
 ) {
     const originalMethod = descriptor.value;
 
-    descriptor.value = async function(...args: unknown[]) {
-        // @ts-ignore
-        if (!this.isAuthenticated) {
-            // @ts-ignore
-            await this.router.navigate(["/login"]);
+    descriptor.value = async function (...args: unknown[]) {
+        if (!(this as AuthenticatedActions).isAuthenticated) {
+            await (this as AuthenticatedActions).router.navigate(["/login"]);
             return null;
         }
         return originalMethod.apply(this, args);

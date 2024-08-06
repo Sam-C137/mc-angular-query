@@ -14,7 +14,7 @@ import { createFavoriteArticleMutation } from "./article-list.component.queries"
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticleListComponent {
-    articles = input.required<Article[]>();
+    public readonly articles = input.required<Article[]>();
     protected readonly favoriteMutation;
     protected readonly unFavoriteMutation;
 

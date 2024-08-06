@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, model } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    inject,
+    model,
+} from "@angular/core";
 import { UserService } from "@state";
 import { Tag } from "@types";
 
@@ -11,7 +16,7 @@ import { Tag } from "@types";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeedHeaderComponent {
-    user = inject(UserService).user;
-    isFeed = model<boolean>(false);
-    extraTag = model<Tag>();
+    protected user = inject(UserService).user;
+    public isFeed = model<boolean>(false);
+    public extraTag = model<Tag>();
 }

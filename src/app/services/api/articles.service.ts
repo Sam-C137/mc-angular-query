@@ -69,7 +69,7 @@ export class ArticlesService extends ApiService {
         );
     }
 
-    create(article: NewArticle) {
+    create(article: NewArticle): Promise<Article> {
         return lastValueFrom(
             this.http
                 .post<{ article: Article }>(`${this.baseUrl}/articles`, {
@@ -79,7 +79,7 @@ export class ArticlesService extends ApiService {
         );
     }
 
-    update(slug: Article["slug"], article: Partial<NewArticle>) {
+    update(slug: Article["slug"], article: Partial<NewArticle>): Promise<Article> {
         return lastValueFrom(
             this.http
                 .put<{ article: Article }>(`${this.baseUrl}/articles/${slug}`, {

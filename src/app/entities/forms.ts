@@ -8,11 +8,7 @@ import {
 import { FormValidator } from "@utils";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
-export abstract class BaseForm<
-    T extends {
-        [key: string]: FormControl;
-    } = {},
-> {
+export abstract class BaseForm<T extends Record<string, FormControl> = {}> {
     protected fb = inject(FormBuilder);
     protected nfb = inject(NonNullableFormBuilder);
     protected form: FormGroup<T>;

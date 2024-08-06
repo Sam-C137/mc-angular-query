@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { authenticationGuard } from "@guards";
+import { authenticationGuard, reverseAuthenticationGuard } from "@guards";
 
 export const routes: Routes = [
     {
@@ -13,6 +13,7 @@ export const routes: Routes = [
             import("./pages/login/login.component").then(
                 (m) => m.LoginComponent,
             ),
+        canActivate: [reverseAuthenticationGuard]
     },
     {
         path: "register",
@@ -20,6 +21,7 @@ export const routes: Routes = [
             import("./pages/register/register.component").then(
                 (m) => m.RegisterComponent,
             ),
+        canActivate: [reverseAuthenticationGuard]
     },
     {
         path: "article/:slug",

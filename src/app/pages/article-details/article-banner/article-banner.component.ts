@@ -21,7 +21,7 @@ type ProfileQueryResults = ReturnType<typeof createProfileMutation>;
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticleBannerComponent extends AuthenticatedActions {
-    article = input.required<Article>();
+    public article = input.required<Article>();
     protected favoriteMutation?: ArticleQueryResults["favorite"];
     protected unfavoriteMutation?: ArticleQueryResults["favorite"];
     protected deleteMutation?: ArticleQueryResults["delete"];

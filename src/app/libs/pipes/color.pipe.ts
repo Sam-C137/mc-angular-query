@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from "@angular/core";
     standalone: true,
 })
 export class ColorPipe implements PipeTransform {
-    transform(shade: "lighter" | "darker" | "normal", amount?: number) {
+    transform(shade: "lighter" | "darker" | "normal", amount?: number): string {
         const randomColor = Math.floor(Math.random() * 16777215).toString(16);
         let color = `#${randomColor}`;
         if (shade === "lighter") {

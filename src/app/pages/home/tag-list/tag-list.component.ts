@@ -14,6 +14,6 @@ import { createTagsQuery } from "./tag-list.component.queries";
     providers: [TagsService],
 })
 export class TagListComponent {
-    selectedTag = model<Tag>();
-    tagsQuery = createTagsQuery();
+    public selectedTag = model<Tag>();
+    protected tagsQuery = createTagsQuery();
 }
