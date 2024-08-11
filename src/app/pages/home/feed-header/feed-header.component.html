@@ -1,24 +1,24 @@
-<header>
-    <p 
+<mc-tab>
+    <mc-tab-item
         (click)="
             isFeed.set(false);
-            extraTag.set('')" 
-        [class.active]="!isFeed() && !extraTag()"
+            extraTag.set('')"
+        [active]="!isFeed() && !extraTag()"
     >
         Global Feed
-    </p>
+    </mc-tab-item>
     @if (user && !extraTag()) {
-        <p 
+        <mc-tab-item
             (click)="
                 isFeed.set(true);
-                extraTag.set('')" 
-            [class.active]="isFeed()"
+                extraTag.set('')"
+            [active]="isFeed()"
         >
             Your feed
-        </p>
+        </mc-tab-item>
     } @if (extraTag()) {
-        <p [class.active]="extraTag()">
+        <mc-tab-item [active]="!!extraTag()">
             {{ extraTag() }}
-        </p>
+        </mc-tab-item>
     }
-</header>
+</mc-tab>

@@ -29,7 +29,7 @@
         @if (articlesQuery.data()) {
             <mc-pagination
                 [currentPage]="page()"
-                [limit]="articleLimit"
+                [limit]="articleLimit()"
                 [total]="articlesQuery.data()!.articlesCount"
                 (changePage)="changePage($event)"
             />

@@ -1,1 +1,42 @@
 <mc-profile-banner />
+<mc-tab>
+    <mc-tab-item
+        [active]="!favorited()"
+        (click)="author.set(username()); favorited.set('')"
+        >My Articles</mc-tab-item
+    >
+    <mc-tab-item
+        [active]="!!favorited()"
+        (click)="author.set(''); favorited.set(username())"
+        >Favorited Articles</mc-tab-item
+    >
+</mc-tab>
+<section>
+    <div class="content">
+        @if (articlesQuery.isPending()) {
+            <span>
+                <mc-spinner />
+            </span>
+        } @else if (articlesQuery.isError()) {
+            <mc-error-handler
+                [message]="articlesQuery.error()!.message"
+                (retry)="articlesQuery.refetch()"
+            />
+        } @else {
+            <mc-article-list 
+                [articles]="articlesQuery.data()!.articles" 
+            />
+        }
+    </div>
+    @if (
+        articlesQuery.data() &&
+        articlesQuery.data()!.articlesCount > articleLimit()
+    ) {
+        <mc-pagination
+            [currentPage]="page()"
+            [limit]="articleLimit()"
+            [total]="articlesQuery.data()!.articlesCount"
+            (changePage)="changePage($event)"
+        />
+    }
+</section>

@@ -1,10 +1,18 @@
 import { Injectable } from "@angular/core";
 import { ApiService } from "@entities";
-import { AllArticles, Article, NewArticle, PaginationParams, Tag, User } from "@types";
+import {
+    AllArticles,
+    Article,
+    NewArticle,
+    PaginationParams,
+    Tag,
+    User,
+} from "@types";
 import { lastValueFrom, map, tap } from "rxjs";
 
-type ArticleExtras = {
+export type ArticleExtras = {
     tag: Tag;
+    author: User["username"];
     favorited: User["username"];
 };
 
@@ -30,10 +38,9 @@ export class ArticlesService extends ApiService {
     favorite(slug: Article["slug"]): Promise<Article> {
         return lastValueFrom(
             this.http
-                .post<{ article: Article }>(
-                    `${this.baseUrl}/articles/${slug}/favorite`,
-                    {},
-                )
+                .post<{
+                    article: Article;
+                }>(`${this.baseUrl}/articles/${slug}/favorite`, {})
                 .pipe(map((data) => data.article)),
         );
     }
@@ -41,9 +48,9 @@ export class ArticlesService extends ApiService {
     unfavorite(slug: Article["slug"]): Promise<Article> {
         return lastValueFrom(
             this.http
-                .delete<{ article: Article }>(
-                    `${this.baseUrl}/articles/${slug}/favorite`,
-                )
+                .delete<{
+                    article: Article;
+                }>(`${this.baseUrl}/articles/${slug}/favorite`)
                 .pipe(map((data) => data.article)),
         );
     }
@@ -59,13 +66,18 @@ export class ArticlesService extends ApiService {
     delete(slug: Article["slug"]): Promise<Article> {
         return lastValueFrom(
             this.http
-                .delete<{ article: Article }>(
-                    `${this.baseUrl}/articles/${slug}`,
-                )
-                .pipe(tap(async () => {
-                        await this.router.navigate(["/profile", this.user?.username]);
+                .delete<{
+                    article: Article;
+                }>(`${this.baseUrl}/articles/${slug}`)
+                .pipe(
+                    tap(async () => {
+                        await this.router.navigate([
+                            "/profile",
+                            this.user?.username,
+                        ]);
                     }),
-                    map((data) => data.article)),
+                    map((data) => data.article),
+                ),
         );
     }
 
@@ -79,7 +91,10 @@ export class ArticlesService extends ApiService {
         );
     }
 
-    update(slug: Article["slug"], article: Partial<NewArticle>): Promise<Article> {
+    update(
+        slug: Article["slug"],
+        article: Partial<NewArticle>,
+    ): Promise<Article> {
         return lastValueFrom(
             this.http
                 .put<{ article: Article }>(`${this.baseUrl}/articles/${slug}`, {

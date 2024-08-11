@@ -2,6 +2,7 @@ import { injectMutation } from "@tanstack/angular-query-experimental";
 import { inject } from "@angular/core";
 import { ArticlesService } from "@api";
 
+const queryKeysToInvalidate = ["article", "articles", "profile-articles"];
 
 export function createFavoriteArticleMutation() {
     const articlesService = inject(ArticlesService);
@@ -10,34 +11,31 @@ export function createFavoriteArticleMutation() {
         favorite: injectMutation((client) => ({
             mutationFn: (slug: string) => articlesService.favorite(slug),
             onSuccess: async () => {
-                await client.invalidateQueries({
-                    queryKey: ["home-articles"],
-                });
-                await client.invalidateQueries({
-                    queryKey: ["article"],
-                });
+                for (const k of queryKeysToInvalidate) {
+                    await client.invalidateQueries({
+                        queryKey: [k],
+                    });
+                }
             },
         })),
         unfavorite: injectMutation((client) => ({
             mutationFn: (slug: string) => articlesService.unfavorite(slug),
             onSuccess: async () => {
-                await client.invalidateQueries({
-                    queryKey: ["home-articles"],
-                });
-                await client.invalidateQueries({
-                    queryKey: ["article"],
-                });
+                for (const k of queryKeysToInvalidate) {
+                    await client.invalidateQueries({
+                        queryKey: [k],
+                    });
+                }
             },
         })),
         delete: injectMutation((client) => ({
             mutationFn: (slug: string) => articlesService.delete(slug),
             onSuccess: async () => {
-                await client.invalidateQueries({
-                    queryKey: ["home-articles"],
-                });
-                await client.invalidateQueries({
-                    queryKey: ["article"],
-                });
+                for (const k of queryKeysToInvalidate) {
+                    await client.invalidateQueries({
+                        queryKey: [k],
+                    });
+                }
             },
         })),
     };

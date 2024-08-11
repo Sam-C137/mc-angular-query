@@ -1,0 +1,17 @@
+@use "main" as *;
+
+:host {
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  padding: 8px 16px;
+  margin-bottom: -1px;
+
+  &:hover {
+    color: $grey-3;
+  }
+
+  &.active {
+    color: $main-green;
+    border-bottom: 2px solid $main-green;
+  }
+}

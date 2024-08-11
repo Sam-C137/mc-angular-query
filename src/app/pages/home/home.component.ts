@@ -1,11 +1,23 @@
-import { ChangeDetectionStrategy, Component, effect, signal } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    effect,
+    signal,
+} from "@angular/core";
 import { Title } from "@decorators";
 import { FeedHeaderComponent } from "./feed-header/feed-header.component";
 import { ArticleListComponent } from "./article-list/article-list.component";
-import { ErrorHandlerComponent, PaginationComponent, SpinnerComponent } from "@components";
+import {
+    ErrorHandlerComponent,
+    PaginationComponent,
+    SpinnerComponent,
+} from "@components";
 import { TagListComponent } from "./tag-list/tag-list.component";
 import { Tag } from "@types";
-import { createArticlesQuery, prefetchArticles } from "./home.component.queries";
+import {
+    createArticlesQuery,
+    prefetchArticles,
+} from "./home.component.queries";
 
 @Component({
     selector: "mc-home",
@@ -25,10 +37,10 @@ import { createArticlesQuery, prefetchArticles } from "./home.component.queries"
 export class HomeComponent {
     @Title
     readonly title = "Home";
-    public isFeed = false;
+    public isFeed = signal(false);
     protected page = signal(1);
     protected selectedTag = signal<Tag>("");
-    protected articleLimit = 10;
+    protected articleLimit = signal(10);
 
     constructor() {
         effect(this.handlePrefetch);
@@ -36,16 +48,20 @@ export class HomeComponent {
 
     protected readonly articlesQuery = createArticlesQuery(
         this.page,
-        this.articleLimit,
-        this.selectedTag(),
+        {
+            articleLimit: this.articleLimit,
+            tag: this.selectedTag,
+        },
         this.isFeed,
     );
 
     private handlePrefetch = prefetchArticles(
         this.articlesQuery,
         this.page,
-        this.articleLimit,
-        this.selectedTag(),
+        {
+            articleLimit: this.articleLimit,
+            tag: this.selectedTag,
+        },
         this.isFeed,
     );
 

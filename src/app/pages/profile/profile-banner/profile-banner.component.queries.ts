@@ -7,7 +7,7 @@ export function createProfileQuery(username: Signal<string>) {
     const profileService = inject(ProfileService);
 
     return injectQuery(() => ({
-        queryKey: ["profile", username],
+        queryKey: ["profile", username()],
         queryFn: () => profileService.getProfile(username()),
     }));
 }

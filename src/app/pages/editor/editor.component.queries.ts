@@ -1,4 +1,7 @@
-import { injectMutation, injectQueryClient } from "@tanstack/angular-query-experimental";
+import {
+    injectMutation,
+    injectQueryClient,
+} from "@tanstack/angular-query-experimental";
 import { Article } from "@types";
 import { inject } from "@angular/core";
 import { ArticlesService } from "@api";
@@ -14,7 +17,7 @@ export function createArticleMutation() {
             mutationFn: (article: Article) => articleService.create(article),
             onSuccess: async (article) => {
                 await queryClient.invalidateQueries({
-                    queryKey: ["home-articles"],
+                    queryKey: ["articles"],
                 });
                 await queryClient.invalidateQueries({
                     queryKey: ["article", article.slug],
@@ -27,7 +30,7 @@ export function createArticleMutation() {
                 articleService.update(article.slug, article),
             onSuccess: async (article) => {
                 await queryClient.invalidateQueries({
-                    queryKey: ["home-articles"],
+                    queryKey: ["articles"],
                 });
                 await queryClient.invalidateQueries({
                     queryKey: ["article", article.slug],

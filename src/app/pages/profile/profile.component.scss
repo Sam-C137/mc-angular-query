@@ -1,1 +1,23 @@
 @use "main" as *;
+
+mc-tab{
+  width: 70vw;
+}
+
+section {
+  @include flex-column;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  div.content {
+    @include center;
+    width: 100%;
+    min-height: 57vh;
+
+    span {
+      @include center;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}

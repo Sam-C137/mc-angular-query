@@ -15,7 +15,7 @@ export function createLoginMutation() {
         }) => authenticationService.login(credentials),
         onSuccess: async () => {
             await client.invalidateQueries({
-                queryKey: ["home-articles"],
+                queryKey: ["articles"],
             });
         },
     }));
