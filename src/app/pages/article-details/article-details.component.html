@@ -4,12 +4,13 @@
     </div>
 } @else if (articleQuery.isError()) {
     <div class="page">
-        <mc-error-handler
-            [message]="articleQuery.error().message"
-        />
+        <mc-error-handler [message]="articleQuery.error().message" />
     </div>
 } @else {
-    <mc-article-banner [article]="articleQuery.data()!" />
+    <div class="banner">
+        <h1>{{ articleQuery.data()?.title }}</h1>
+        <mc-article-credits [article]="articleQuery.data()!" />
+    </div>
     <article>
         <p>{{ articleQuery.data()?.body }}</p>
         <ul>
@@ -19,4 +20,27 @@
         </ul>
         <hr />
     </article>
+    <div class="grid-box">
+        <mc-article-credits [article]="articleQuery.data()!" />
+    </div>
+    <div class="comments-list">
+        @if (!user) {
+            <p>
+                <a routerLink="/login">Sign in</a> or
+                <a routerLink="/register">Sign up</a> to add comments on this
+                article
+            </p>
+        } @else {
+            <mc-comment-box [editMode]="true" />
+            @if (commentsQuery.fetch.data()) {
+                @for (
+                    comment of commentsQuery.fetch.data() || []
+                        | sort: "createdAt" : "desc";
+                    track comment.id
+                ) {
+                    <mc-comment-box [comment]="comment" />
+                }
+            }
+        }
+    </div>
 }

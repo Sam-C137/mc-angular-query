@@ -1,5 +1,16 @@
 @use "main" as *;
 
+:host{
+  display: block;
+  margin-bottom: 3rem;
+}
+
+h1 {
+  font-weight: 600;
+  font-size: 2.8rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
 ul,
 li {
   display: inline;
@@ -23,8 +34,8 @@ ul {
 
 article {
   @include center;
-  padding: 0 10% 32px;
   flex-direction: column;
+  padding: 0 10%;
 
   hr {
     width: 100%;
@@ -45,5 +56,58 @@ article {
     font-size: 1.2rem;
     line-height: 1.8rem;
     margin-bottom: 2rem;
+  }
+}
+
+.banner {
+  @include center;
+  flex-direction: column;
+  align-items: flex-start;
+  background: $dark-2;
+  padding: 32px 20%;
+  color: $light;
+  margin-bottom: 40px;
+  @include lg {
+    padding: 32px 10%;
+  }
+  @include breakpoint-height-max(700px) {
+    padding: 32px 10%;
+  }
+}
+
+.grid-box{
+  display: grid;
+  place-items: center;
+
+  mc-article-credits{
+    ::ng-deep{
+      a {
+        color: #5cb85c !important;
+      }
+    }
+  }
+}
+
+mc-comment-box:first-of-type{
+  margin-top: 2rem;
+}
+
+.comments-list{
+  margin: 0 auto;
+  @include flex-column;
+  max-width: 750px;
+  gap: .75rem;
+
+  p{
+    margin-top: 2rem;
+
+    a {
+      text-decoration: none;
+      color: $main-green;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }

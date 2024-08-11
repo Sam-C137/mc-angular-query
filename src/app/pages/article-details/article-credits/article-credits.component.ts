@@ -1,5 +1,5 @@
-import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component, input } from "@angular/core";
+import { AvatarComponent } from "@components";
 import { RouterLink } from "@angular/router";
 import { AuthenticatedActions } from "@entities";
 import { Article } from "@types";
@@ -7,20 +7,21 @@ import { Protected } from "@decorators";
 import {
     createFavoriteArticleMutation,
     createProfileMutation,
-} from "./article-banner.component.queries";
+} from "./article-credits.queries";
+import { DatePipe } from "@angular/common";
 
 type ArticleQueryResults = ReturnType<typeof createFavoriteArticleMutation>;
 type ProfileQueryResults = ReturnType<typeof createProfileMutation>;
 
 @Component({
-    selector: "mc-article-banner",
+    selector: "mc-article-credits",
     standalone: true,
-    imports: [RouterLink, CommonModule],
-    templateUrl: "./article-banner.component.html",
-    styleUrl: "./article-banner.component.scss",
+    imports: [AvatarComponent, RouterLink, DatePipe],
+    templateUrl: "./article-credits.component.html",
+    styleUrl: "./article-credits.component.scss",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArticleBannerComponent extends AuthenticatedActions {
+export class ArticleCreditsComponent extends AuthenticatedActions {
     public article = input.required<Article>();
     protected favoriteMutation?: ArticleQueryResults["favorite"];
     protected unfavoriteMutation?: ArticleQueryResults["favorite"];

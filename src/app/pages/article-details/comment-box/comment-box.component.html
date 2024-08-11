@@ -1,0 +1,42 @@
+<form (submit)="submit()" [formGroup]="form">
+    <mc-text-area
+        formControlName="body"
+        placeholder="Write a comment..."
+        inputId="34"
+        [rows]="4"
+        [resize]="editMode()"
+    />
+    @if (editMode()){
+        <div>
+            <mc-avatar
+                [src]=user?.image
+                [fallback]="user?.username"
+                style="--size: 38px;"
+            />
+            <mc-button
+                type="submit"
+                [disabled]="form.invalid || createCommentMutation.isPending()"
+                [loading]="createCommentMutation.isPending()"
+            >
+                Submit
+            </mc-button>
+        </div>
+    } @else {
+        <div>
+            <span>
+                <mc-avatar
+                    [src]=comment()?.author?.image
+                    [fallback]="comment()?.author?.username"
+                    style="--size: 32px;"
+                />
+                <a [routerLink]="['/profile', comment()?.author?.username]">
+                    {{ comment()?.author?.username }}
+                </a>
+                <p>{{ comment()?.createdAt | date : "longDate" }}</p>
+            </span>
+            <i class="icon-trash"
+               (click)="handleDelete(comment()?.id)"
+            ></i>
+        </div>
+    }
+</form>

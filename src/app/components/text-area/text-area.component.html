@@ -13,5 +13,6 @@
     [rows]="rows()"
     [formControl]="control"
     *ngIf="control"
+    [class.no-resize]="!resize()"
 ></textarea>
 <p class="error">{{ error() }}</p>

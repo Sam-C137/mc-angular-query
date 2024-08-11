@@ -24,4 +24,5 @@ export class TextAreaComponent<T> extends BaseValueAccessorDirective<T> {
     placeholder = input<string>();
     rows = input<number>(8);
     error = input<string>();
+    resize = input(true);
 }

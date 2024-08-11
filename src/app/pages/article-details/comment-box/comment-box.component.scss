@@ -1,0 +1,75 @@
+@use "main" as *;
+
+:host {
+  display: block;
+  width: 100%;
+
+  form {
+    width: 100%;
+    min-width: 0;
+
+    textarea {
+      width: 100%;
+      font-size: 1rem;
+      height: 100px;
+      padding: 1.25rem;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border-radius: 0.2rem;
+      font-weight: 700;
+      margin-top: 0;
+      @include center;
+    }
+  }
+
+  div {
+    @include center;
+    justify-content: space-between;
+    border: 1px solid #e5e5e5;
+    border-radius: 0 0 0.25rem 0.25rem;
+    padding: 0.75rem 1.25rem;
+    background-color: #f5f5f5;
+
+    span{
+      @include center;
+
+      a {
+        text-decoration: none;
+        color: $main-green;
+        font-size: .875rem;
+        margin-left: .5rem;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      p {
+        font-size: .875rem;
+        margin-left: 5px;
+        color: #bbb;
+      }
+    }
+  }
+}
+
+mc-button{
+  font-weight: 700;
+  padding: .25rem .5rem;
+  font-size: .875rem;
+  border-radius: .2rem;
+}
+
+mc-text-area{
+ --textarea-margin: 0;
+}
+
+.icon-trash{
+  cursor: pointer;
+  @include icon(url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 512 512'%3E%3Cpath fill='none' d='M296 64h-80a7.91 7.91 0 0 0-8 8v24h96V72a7.91 7.91 0 0 0-8-8'/%3E%3Cpath fill='%23373a3c' d='M432 96h-96V72a40 40 0 0 0-40-40h-80a40 40 0 0 0-40 40v24H80a16 16 0 0 0 0 32h17l19 304.92c1.42 26.85 22 47.08 48 47.08h184c26.13 0 46.3-19.78 48-47l19-305h17a16 16 0 0 0 0-32M192.57 416H192a16 16 0 0 1-16-15.43l-8-224a16 16 0 1 1 32-1.14l8 224A16 16 0 0 1 192.57 416M272 400a16 16 0 0 1-32 0V176a16 16 0 0 1 32 0Zm32-304h-96V72a7.91 7.91 0 0 1 8-8h80a7.91 7.91 0 0 1 8 8Zm32 304.57A16 16 0 0 1 320 416h-.58A16 16 0 0 1 304 399.43l8-224a16 16 0 1 1 32 1.14Z'/%3E%3C/svg%3E"), 16px)
+}

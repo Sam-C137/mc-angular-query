@@ -35,7 +35,7 @@ import { createArticlesQuery } from "../home/home.component.queries";
 })
 export class ProfileComponent {
     @Title
-    readonly title = "Profile";
+    protected title = "";
     private route = inject(ActivatedRoute);
     protected username = signal("");
     protected page = signal(1);
@@ -47,6 +47,7 @@ export class ProfileComponent {
         this.route.params.subscribe((params) => {
             this.username.set(params["username"]);
             this.author.set(this.username());
+            this.title = "@" + this.username();
         });
     }
 
