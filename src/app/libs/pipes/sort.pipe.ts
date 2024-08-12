@@ -5,26 +5,34 @@ import { Pipe, PipeTransform } from "@angular/core";
     standalone: true,
 })
 export class SortPipe implements PipeTransform {
-    transform<T>(arr: T[], field: string, order: "asc" | "desc"): T[] {
+    transform<T>(
+        arr: T[],
+        field: T extends object ? keyof T : never,
+        order: "asc" | "desc",
+    ): T[] {
         if (!arr || arr.length < 1) return arr;
 
         const isArrayOfObjects = typeof arr[0] === "object";
 
         if (isArrayOfObjects) {
             return arr.sort((a, b) => {
-                const aValue = this.extractValue(a, field);
-                const bValue = this.extractValue(b, field);
+                const aValue = a[field];
+                const bValue = b[field];
 
                 if (typeof aValue === "number" && typeof bValue === "number") {
                     return order === "asc" ? aValue - bValue : bValue - aValue;
-                } else if (this.isTimestampField(field)) {
+                } else if (
+                    typeof aValue === "string" &&
+                    typeof bValue === "string" &&
+                    this.isTimestampField(field)
+                ) {
                     const aDate = new Date(aValue);
                     const bDate = new Date(bValue);
                     return order === "asc"
                         ? aDate.getTime() - bDate.getTime()
                         : bDate.getTime() - aDate.getTime();
                 } else {
-                    return aValue.localeCompare(bValue);
+                    return (aValue as string).localeCompare(bValue as string);
                 }
             });
         } else {
@@ -32,11 +40,7 @@ export class SortPipe implements PipeTransform {
         }
     }
 
-    private extractValue(obj: any, field: string): any {
-        return obj[field];
-    }
-
-    private isTimestampField(field: string): boolean {
-        return field.toLowerCase().endsWith("at");
+    private isTimestampField<T extends object, F = keyof T>(field: F): boolean {
+        return typeof field === "string" && field.toLowerCase().endsWith("at");
     }
 }
