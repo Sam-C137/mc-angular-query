@@ -13,7 +13,7 @@ export const routes: Routes = [
             import("./pages/login/login.component").then(
                 (m) => m.LoginComponent,
             ),
-        canActivate: [reverseAuthenticationGuard]
+        canActivate: [reverseAuthenticationGuard],
     },
     {
         path: "register",
@@ -21,7 +21,7 @@ export const routes: Routes = [
             import("./pages/register/register.component").then(
                 (m) => m.RegisterComponent,
             ),
-        canActivate: [reverseAuthenticationGuard]
+        canActivate: [reverseAuthenticationGuard],
     },
     {
         path: "article/:slug",
@@ -51,5 +51,9 @@ export const routes: Routes = [
             import("./pages/profile/profile.component").then(
                 (m) => m.ProfileComponent,
             ),
+    },
+    {
+        path: "**",
+        redirectTo: "",
     },
 ];

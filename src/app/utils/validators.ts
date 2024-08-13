@@ -9,26 +9,15 @@ const errorCodes = new Set([
     "required",
     "minlength",
     "email",
-    "invalidName",
     "invalidPassword",
-    "passwordMismatch",
-    "invalidFileType",
-    "invalidFileSize",
-    "invalidPhoneNumber",
 ]);
 
 const DEFAULT_ERROR_MESSAGES = {
     required: "This field is required",
     minlength: "This field must be at least 4 characters long",
     email: "Email must be a valid email address",
-    invalidName:
-        "Name must contain a first part, followed by a space, then a last part",
     invalidPassword:
         "Password must contain at least one uppercase letter and a number",
-    passwordMismatch: "Passwords must match",
-    invalidFileType: "Invalid file type. Please upload a PNG file",
-    invalidFileSize: "Uploaded file must be less than 5mb",
-    invalidPhoneNumber: "Phone number must be 10 digits",
 };
 
 export class FormValidator {
