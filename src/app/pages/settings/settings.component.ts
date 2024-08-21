@@ -2,13 +2,13 @@ import {
     ChangeDetectionStrategy,
     Component,
     inject,
-    OnInit,
+    OnInit, signal,
 } from "@angular/core";
 import { FormControl, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { ProfileService } from "@api";
 import {
-    ButtonComponent,
+    ButtonComponent, DialogComponent,
     InputComponent,
     TextAreaComponent,
 } from "@components";
@@ -28,6 +28,7 @@ const fields = ["image", "username", "bio", "email", "password"];
         ButtonComponent,
         TextAreaComponent,
         ReactiveFormsModule,
+        DialogComponent,
     ],
     templateUrl: "./settings.component.html",
     styleUrl: "./settings.component.scss",
@@ -47,6 +48,7 @@ export class SettingsComponent
     private router = inject(Router);
     private queryClient = injectQueryClient();
     protected readonly profileMutation = createProfileMutation();
+    protected isModalOpen = signal(false);
 
     ngOnInit() {
         this.form = this.setupForm();

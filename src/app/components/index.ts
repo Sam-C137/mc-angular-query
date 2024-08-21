@@ -10,3 +10,4 @@ export * from "./avatar/avatar.component";
 export * from "./tab/tab.component";
 export * from "./tab/tab-item/tab-item.component";
 export * from "./footer/footer.component";
+export * from "./dialog/dialog.component";

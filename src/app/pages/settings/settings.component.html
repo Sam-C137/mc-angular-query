@@ -51,9 +51,26 @@
             type="button"
             [disabled]="profileMutation.isPending()"
             [loading]="profileMutation.isPending()"
-            (click)="logout()"
+            (click)="isModalOpen.set(true)"
+            (keydown)="$event.key === 'Enter' && isModalOpen.set(true)"
         >
             Or click here to log out.
         </mc-button>
     </form>
 </main>
+
+@if (isModalOpen()) {
+    <mc-dialog [(open)]="isModalOpen" (onConfirm)="logout()">
+        <h1 headerText>Log out?</h1>
+        <div content>
+            Are you sure you want to log out?
+            You can always log back in.
+        </div>
+        <button cancelButton>
+            Cancel
+        </button>
+        <button confirmButton>
+            Confirm
+        </button>
+    </mc-dialog>
+}

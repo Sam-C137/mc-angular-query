@@ -1,0 +1,92 @@
+@use "main" as *;
+
+:host {
+}
+
+mc-dialog{
+  // variables
+  --menu-bg: #fff;
+  --menu-max-width: 25rem;
+  --menu-border-radius: 0.75rem;
+  --menu-padding: 1rem 1.25rem;
+
+  position: fixed;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 10;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(52, 64, 84, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 1;
+
+  .menu {
+    min-width: 10rem;
+    min-height: 10rem;
+    max-width: var(--menu-max-width);
+    background: var(--menu-bg);
+    border-radius: var(--menu-border-radius);
+    padding: var(--menu-padding);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  header {
+    @include flex-row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 0.5rem;
+
+    span{
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      &:focus-visible {
+        outline: 2px solid $dark;
+        border-radius: 50vw;
+      }
+    }
+
+    [headertext]{
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+  }
+
+  section {
+    [content]{
+      font-size: 1rem;
+    }
+  }
+
+  footer{
+    @include flex-row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 0.75rem;
+
+    [cancelbutton], [confirmbutton] {
+      padding: 0.35rem 0.5rem;
+      font-size: 1rem;
+      border-radius: 0.25rem;
+      border: none;
+      cursor: pointer;
+    }
+
+    [cancelbutton] {
+      background: #b85c5c;
+      color: white;
+      border: 1px solid#b85c5c;
+    }
+
+    [confirmbutton] {
+      border: 1px solid #2c7a7b;
+      background: white;
+    }
+  }
+}

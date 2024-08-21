@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, input } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ElementRef,
+    HostBinding,
+    HostListener,
+    inject,
+    input,
+} from "@angular/core";
 import { HasDisabledStateDirective } from "@directives";
 
 @Component({
@@ -22,6 +30,8 @@ export class ButtonComponent {
     private hasDisabled = inject(HasDisabledStateDirective, {
         optional: true,
     });
+
+    @HostBinding("tabindex") tabindex = "0";
 
     @HostListener("click", ["$event"])
     handleClick() {

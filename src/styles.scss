@@ -25,3 +25,11 @@ p {
 *:after {
   box-sizing: border-box;
 }
+
+body:has(.screen-fit) {
+  overflow: hidden;
+}
+
+router-outlet{
+  display: none;
+}

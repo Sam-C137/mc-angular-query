@@ -1,0 +1,19 @@
+<div class="menu" [class.open]="open()" trapFocus @popup>
+    <header>
+        <ng-content select="[headerText]" />
+        <span (click)="open.set(false)" tabindex="0">
+            <ng-container *ngTemplateOutlet="closeBtn() || defaultCloseBtn"/>
+        </span>
+    </header>
+    <section>
+        <ng-content select="[content]" />
+    </section>
+    <footer>
+        <ng-content select="[cancelButton]" />
+        <ng-content select="[confirmButton]" />
+    </footer>
+</div>
+
+<ng-template #defaultCloseBtn>
+    x
+</ng-template>
