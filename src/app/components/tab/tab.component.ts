@@ -2,11 +2,11 @@ import {
     AfterContentInit,
     ChangeDetectionStrategy,
     Component,
+    contentChild,
     contentChildren,
-    input,
-    signal,
 } from "@angular/core";
-import { TabItemComponent } from "./tab-item/tab-item.component";
+import { TabContentComponent } from "./tab-content/tab-content.component";
+import { TabsListComponent } from "./tabs-list/tabs-list.component";
 
 @Component({
     selector: "mc-tab",
@@ -17,33 +17,20 @@ import { TabItemComponent } from "./tab-item/tab-item.component";
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabComponent implements AfterContentInit {
-    private tabItems = contentChildren(TabItemComponent);
-    public defaultActivate = input<boolean>();
-    private activeItem = signal("");
+    private tabList = contentChild(TabsListComponent);
+    private tabContents = contentChildren(TabContentComponent);
 
     ngAfterContentInit() {
-        if (this.defaultActivate()) {
-            this.handleActivate();
-        }
+        this.handleActivate();
     }
 
     private handleActivate() {
-        this.tabItems().forEach((tItem) => {
-            tItem.activeChange.subscribe((id) => {
-                this.setActiveItem(id);
+        this.tabList()?.activeChange.subscribe(([, value]) => {
+            this.tabContents().forEach((tContent) => {
+                tContent.display.set(
+                    tContent.value() === value ? "block" : "none",
+                );
             });
-        });
-    }
-
-    private setActiveItem(id: string) {
-        if (this.activeItem() === id) {
-            this.activeItem.set("");
-        } else {
-            this.activeItem.set(id);
-        }
-
-        this.tabItems().forEach((tItem) => {
-            tItem.active.set(tItem.id === this.activeItem());
         });
     }
 }

@@ -1,16 +1,16 @@
 <mc-profile-banner />
-<mc-tab>
-    <mc-tab-item
+<mc-tabs-list>
+    <mc-tab-trigger
         [active]="!favorited()"
         (click)="author.set(username()); favorited.set('')"
-        >My Articles</mc-tab-item
+        >My Articles</mc-tab-trigger
     >
-    <mc-tab-item
+    <mc-tab-trigger
         [active]="!!favorited()"
         (click)="author.set(''); favorited.set(username())"
-        >Favorited Articles</mc-tab-item
+        >Favorited Articles</mc-tab-trigger
     >
-</mc-tab>
+</mc-tabs-list>
 <section>
     <div class="content">
         @if (articlesQuery.isPending()) {
@@ -23,8 +23,8 @@
                 (retry)="articlesQuery.refetch()"
             />
         } @else {
-            <mc-article-list 
-                [articles]="articlesQuery.data()!.articles" 
+            <mc-article-list
+                [articles]="articlesQuery.data()!.articles"
             />
         }
     </div>

@@ -6,12 +6,17 @@ import {
 } from "@angular/core";
 import { UserService } from "@state";
 import { Tag } from "@types";
-import { TabComponent, TabItemComponent } from "@components";
+import {
+    TabComponent,
+    TabContentComponent,
+    TabsListComponent,
+    TabTrigger,
+} from "@components";
 
 @Component({
     selector: "mc-feed-header",
     standalone: true,
-    imports: [TabComponent, TabItemComponent],
+    imports: [TabComponent, TabTrigger, TabContentComponent, TabsListComponent],
     templateUrl: "./feed-header.component.html",
     styleUrl: "./feed-header.component.scss",
     changeDetection: ChangeDetectionStrategy.OnPush,

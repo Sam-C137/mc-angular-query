@@ -10,7 +10,8 @@ import {
     PaginationComponent,
     SpinnerComponent,
     TabComponent,
-    TabItemComponent,
+    TabsListComponent,
+    TabTrigger,
 } from "@components";
 import { ActivatedRoute } from "@angular/router";
 import { Title } from "@decorators";
@@ -23,11 +24,12 @@ import { createArticlesQuery } from "../home/home.component.queries";
     imports: [
         ProfileBannerComponent,
         TabComponent,
-        TabItemComponent,
+        TabTrigger,
         ArticleListComponent,
         SpinnerComponent,
         ErrorHandlerComponent,
         PaginationComponent,
+        TabsListComponent,
     ],
     templateUrl: "./profile.component.html",
     styleUrl: "./profile.component.scss",

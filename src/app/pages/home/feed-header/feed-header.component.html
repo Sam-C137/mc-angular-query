@@ -1,24 +1,37 @@
-<mc-tab>
-    <mc-tab-item
+<mc-tabs-list>
+    <mc-tab-trigger
         (click)="
             isFeed.set(false);
             extraTag.set('')"
         [active]="!isFeed() && !extraTag()"
     >
         Global Feed
-    </mc-tab-item>
+    </mc-tab-trigger>
     @if (user && !extraTag()) {
-        <mc-tab-item
+        <mc-tab-trigger
             (click)="
                 isFeed.set(true);
                 extraTag.set('')"
             [active]="isFeed()"
         >
             Your feed
-        </mc-tab-item>
+        </mc-tab-trigger>
     } @if (extraTag()) {
-        <mc-tab-item [active]="!!extraTag()">
+        <mc-tab-trigger [active]="!!extraTag()">
             {{ extraTag() }}
-        </mc-tab-item>
+        </mc-tab-trigger>
     }
+</mc-tabs-list>
+
+<mc-tab>
+    <mc-tabs-list>
+        <mc-tab-trigger value="go" [defaultValue]="true">Go</mc-tab-trigger>
+        <mc-tab-trigger value="no-go">No Go</mc-tab-trigger>
+    </mc-tabs-list>
+    <mc-tab-content value="go">
+        <div>Go content here okay</div>
+    </mc-tab-content>
+    <mc-tab-content value="no-go">
+        <div>No go content here brr</div>
+    </mc-tab-content>
 </mc-tab>

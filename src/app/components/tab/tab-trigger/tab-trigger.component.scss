@@ -10,7 +10,7 @@
     color: $grey-3;
   }
 
-  &.active {
+  &[aria-selected="true"] {
     color: $main-green;
     border-bottom: 2px solid $main-green;
   }
