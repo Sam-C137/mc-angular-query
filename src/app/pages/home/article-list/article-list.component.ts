@@ -1,17 +1,24 @@
 import { DatePipe } from "@angular/common";
-import { ChangeDetectionStrategy, Component, input } from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    CUSTOM_ELEMENTS_SCHEMA,
+    input,
+} from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { Article } from "@types";
 import { IsAuthenticatedDirective } from "@directives";
 import { createFavoriteArticleMutation } from "./article-list.component.queries";
+import { AvatarComponent } from "@components";
 
 @Component({
     selector: "mc-article-list",
     standalone: true,
-    imports: [RouterLink, DatePipe, IsAuthenticatedDirective],
+    imports: [RouterLink, DatePipe, IsAuthenticatedDirective, AvatarComponent],
     templateUrl: "./article-list.component.html",
     styleUrl: "./article-list.component.scss",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ArticleListComponent {
     public readonly articles = input.required<Article[]>();

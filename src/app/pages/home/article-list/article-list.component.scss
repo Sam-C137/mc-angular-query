@@ -44,10 +44,8 @@ article {
       background: $light;
       cursor: pointer;
 
-      svg {
-        path {
-          fill: $main-green;
-        }
+      [icon="ph:heart-fill"]{
+        color: $main-green;
       }
 
       &:hover,
@@ -55,10 +53,8 @@ article {
         background: $main-green;
         color: $light;
 
-        svg {
-          path {
-            fill: $light;
-          }
+        [icon="ph:heart-fill"]{
+          color: $light;
         }
       }
 
@@ -88,13 +84,8 @@ article {
         }
       }
 
-      div.img {
-        height: 32px;
-        width: 32px;
-
-        img {
-          @include image;
-        }
+      mc-avatar{
+        --size: 32px;
       }
     }
   }
